@@ -1,0 +1,118 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+model Account {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  access_token      String
+  expires_at        BigInt
+  id_token          String
+  provider          String
+  providerAccountId String
+  scope             String
+  token_type        String
+  type              String
+  userId            String @db.ObjectId
+  
+  @@unique([provider, providerAccountId])
+}
+  
+model Board {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  userId  String   @db.ObjectId
+  columns Column[]
+}
+  
+model Column {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  boardId String @db.ObjectId
+  name    String
+  Board   Board  @relation(fields: [boardId], references: [id])
+  Task    Task[]
+}
+  
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  expires      DateTime @db.Date
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+}
+
+model Subtask {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  isDone Boolean
+  name   String
+  taskId String  @db.ObjectId
+  Task   Task    @relation(fields: [taskId], references: [id])
+}
+  
+model Task {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  columnId      String    @db.ObjectId
+  currentStatus String
+    description   String
+  titre         String
+  Subtasks      Subtask[]
+  Column        Column    @relation(fields: [columnId], references: [id])
+}
+  
+model User {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  email         String @unique
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  emailVerified Json
+  image         String
+  name          String
+}
+  
+model accounts {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  access_token      String
+  expires_at        BigInt
+  id_token          String
+  provider          String
+  providerAccountId String   
+  scope             String
+  token_type        String
+  type              String
+  userId            String @db.ObjectId
+  
+  @@unique([provider, providerAccountId])
+}
+
+model sessions {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  expires      DateTime @db.Date
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+}
+  
+model users {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  email         String @unique
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  emailVerified Json  
+  image         String
+  name          String
+}
+  
+model verificationtokens {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  /// Field referred in an index, but found no data to define the type.
+  identifier Json
+  /// Field referred in an index, but found no data to define the type.
+  token      Json   @unique
+  
+  @@unique([identifier, token])
+}
