@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-// import SideNav from "../components/sidenav";
+import SideNav from "@/components/sidenav";
 
 const layout = (props:PropsWithChildren) => {
   return (
@@ -15,8 +15,8 @@ const layout = (props:PropsWithChildren) => {
     //   </div>
     // </div><
 
-    <div>
-      {/* <SideNav /> */}
+    <div  className="flex">
+      <SideNav />
       {props.children}
     </div>
     
