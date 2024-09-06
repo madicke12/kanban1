@@ -1,11 +1,7 @@
-export default function VerifyPage() {
+import React from 'react'
+
+export default function page() {
   return (
-    <>
-      <h1>Board page</h1>
-      <p>
-        This page is intended to verify that Redux state is persisted across
-        page navigations.
-      </p>
-    </>
+    <div>page</div>
   )
 }
