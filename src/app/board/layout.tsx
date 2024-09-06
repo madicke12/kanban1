@@ -15,9 +15,11 @@ const layout = (props:PropsWithChildren) => {
     //   </div>
     // </div><
 
-    <div  className="flex">
+    <div  className="flex " >
       <SideNav />
+      <div className="w-full">
       {props.children}
+      </div>
     </div>
     
   );
