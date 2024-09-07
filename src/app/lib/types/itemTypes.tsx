@@ -1,5 +1,5 @@
 
-interface ItemsType {
+export  interface ItemsType {
     id: number;
     name: string;
     price: number;
@@ -7,4 +7,12 @@ interface ItemsType {
     
 }
 
-export default ItemsType;
+export interface BoardType {
+    id: number;
+    name: string;
+    items: ItemsType[]
+}
+
+export interface BoardListeType {
+    bListe: {name:string , id:string}[]
+}
