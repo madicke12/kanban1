@@ -16,3 +16,7 @@ export interface BoardType {
 export interface BoardListeType {
     bListe: {name:string , id:string}[]
 }
+
+export interface ParamsType {
+    id:string
+}
