@@ -1,18 +1,18 @@
+import { BoardSelect } from '@/components/boardDropDown'
 import Navbar from '@/components/navbar'
-import React from 'react'
-import chevrn from '../../../public/1x/chevron-down.png'
-import Image from 'next/image'
+import prisma from '../lib/prismaSingleton'
 
-export default function page() {
+export default async function page() {
+    const Board= await prisma.board.findMany()
+    const boardListe= Board.map(item=>{return ({name:item.name , id:item.id})})
+    console.log(boardListe)
   return (
     <div>
         <Navbar />
         <div>
-            <div className ='flex'>
-                <Image src={chevrn} alt='chevron' width={20} height={20} />
-                <span className=''>
-                    Board
-                </span>
+            <div className ='flex gap-2 p-3 mt-4 '>
+                <BoardSelect bListe={boardListe} />
+                {/* <Image src={chevrn} alt='chevron' width={30} height={30} /> */}
             </div>
         </div>
     </div>
