@@ -1,0 +1,101 @@
+/* Generated using nucleoapp.com */
+
+/* --------------------------------
+
+General
+
+-------------------------------- */
+
+.icon {
+  display: inline-block;
+  color: inherit; /* icon primary color */
+  height: 1em;
+  width: 1em;
+  line-height: 1;
+  flex-shrink: 0;
+  max-width: initial;
+}
+
+.icon use {
+  /* icon secondary color */
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+/* --------------------------------
+
+Themes
+
+-------------------------------- */
+
+.icon-theme-1 {
+  color: #212121;
+}
+
+.icon-theme-1 use {
+  fill: inherit;
+  stroke: inherit;
+}
+
+/* --------------------------------
+
+Sizes
+
+-------------------------------- */
+
+/* relative units */
+.icon-sm {
+  font-size: 0.8em;
+}
+
+.icon-lg {
+  font-size: 1.2em;
+}
+
+/* absolute units */
+.icon-16 {
+  font-size: 16px;
+}
+
+.icon-32 {
+  font-size: 32px;
+}
+
+/* --------------------------------
+
+Transformations/Animations
+
+-------------------------------- */
+
+.icon-rotate-90 {
+  transform: rotate(90deg);
+}
+
+.icon-rotate-180 {
+  transform: rotate(180deg);
+}
+
+.icon-rotate-270 {
+  transform: rotate(270deg);
+}
+
+.icon-flip-y {
+  transform: scaleY(-1);
+}
+
+.icon-flip-x {
+  transform: scaleX(-1);
+}
+
+.icon-is-spinning {
+  animation: icon-spin 1s infinite linear;
+}
+
+@keyframes icon-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
