@@ -11,7 +11,7 @@ const SideNav =()=>{
     const pathName = usePathname();
     console.log(pathName)
     return (
-        <div className=" w-64 h-[100vh] bg-white flex flex-col border border-secondary-100">
+        <div className=" w-64  bg-white flex flex-col border h-screen sticky top-0 border-secondary-100">
             <div className={`w-44 h-12 flex gap-2 mt-4 mb-4 ml-4  items-center `}>
                 <Image src={Logo} alt="logo" width={44} height={44} className=' rounded-[4px]' />
                 <span className="text-black  font-bold text-3xl ">Kanban</span>
