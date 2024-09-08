@@ -11,6 +11,7 @@ const config: Config = {
   theme: {
   	extend: {
   		colors: {
+        madicke:"#FAFAFBFF",
   			white: '#FFFFFF',
   			black: '#000000',
   			primary: {
