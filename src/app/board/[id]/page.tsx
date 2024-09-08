@@ -13,14 +13,14 @@ export default async function page({ params }: { params: ParamsType }) {
         }
     }
     ) 
-    // console.log(boardData)
-    const columns = boardData?.columns.map(item=>item.name);
-    console.log(columns)
-
-    // console.log(params)
+    const todos = boardData?.columns.filter(item=>item.name === 'To Do')
+    const inProgress = boardData?.columns.filter(item=>item.name === 'Doing')
+    const done = boardData?.columns.filter(item=>item.name === 'Done')
     return (
-        <div className='p-3'>
-            <ColumN/>
+        <div className='p-3 flex gap-3 overflow overflow-y-auto'>
+            <ColumN columns={todos}/>
+            <ColumN columns={inProgress}/>
+            <ColumN columns={done}/>
         </div>
     )
 }

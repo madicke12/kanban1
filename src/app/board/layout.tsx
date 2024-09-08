@@ -18,7 +18,7 @@ const layout = async (props: PropsWithChildren) => {
         <Navbar />
         <div className='flex gap-2 p-3 mt-4  items-center justify-between w-full '>
           <BoardSelect bListe={boardListe} />
-          <div className="">
+          <div className=" ">
             <Button className="hover:bg-transparent outline outline-gray-100 bg-transparent text-black gap-2" > <Image src={filterIcon} alt='' width={14} height={14} /> 
               <span className="">filter</span>
             </Button>
