@@ -1,6 +1,7 @@
-import prisma from '@/app/lib/prismaSingleton'
+import prisma from '../../lib/prismaSingleton'
 import React from 'react'
-import { ParamsType } from '@/app/lib/types/itemTypes'
+import { ParamsType } from '../../lib/types/itemTypes'
+import ColumN from '../../../components/column'
 
 export default async function page({ params }: { params: ParamsType }) {
     const boardData = await prisma.board.findUnique({
@@ -11,11 +12,15 @@ export default async function page({ params }: { params: ParamsType }) {
             columns: { include: { Task: { include: { Subtasks: true } } } },
         }
     }
-    )
-    console.log(boardData)
+    ) 
+    // console.log(boardData)
+    const columns = boardData?.columns.map(item=>item.name);
+    console.log(columns)
 
     // console.log(params)
     return (
-        <div>page</div>
+        <div className='p-3'>
+            <ColumN/>
+        </div>
     )
 }
