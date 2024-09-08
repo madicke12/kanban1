@@ -61,7 +61,7 @@ model Task {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   columnId      String    @db.ObjectId
   currentStatus String
-    description   String
+  description   String
   titre         String
   Subtasks      Subtask[]
   Column        Column    @relation(fields: [columnId], references: [id])

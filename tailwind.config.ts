@@ -10,6 +10,9 @@ const config: Config = {
   prefix: "",
   theme: {
   	extend: {
+      boxShadow: {
+        'custom': '0px 0px 1px rgba(23, 26, 31, 0.1), 0px 0px 2px rgba(23, 26, 31, 0.1)',
+      },
   		colors: {
         madicke:"#FAFAFBFF",
   			white: '#FFFFFF',
