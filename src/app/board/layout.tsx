@@ -1,11 +1,11 @@
-import { PropsWithChildren } from "react";
+import { BoardSelect } from '@/components/boardDropDown';
+import Navbar from '@/components/navbar';
 import SideNav from "@/components/sidenav";
-import { BoardSelect } from '@/components/boardDropDown'
-import Navbar from '@/components/navbar'
-import prisma from '../lib/prismaSingleton'
 import { Button } from "@/components/ui/button";
-import filterIcon from '../../../public/1x/ios/@3x/filter-2@3x.png'
-import Image from 'next/image'
+import Image from 'next/image';
+import { PropsWithChildren } from "react";
+import filterIcon from '../../../public/1x/ios/@3x/filter-2@3x.png';
+import prisma from '../lib/prismaSingleton';
 
 const layout = async (props: PropsWithChildren) => {
   const Board = await prisma.board.findMany()
