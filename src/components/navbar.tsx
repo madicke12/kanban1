@@ -2,6 +2,7 @@ import Image from 'next/image';
 import searchIcon from '../../public/1x/zoom-3.png';
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import AddNewTask from './addNewTask';
 
 const Navbar = () => {
     return (
@@ -11,7 +12,7 @@ const Navbar = () => {
                 <input type="text" placeholder='Search...' className="bg-transparent z-0 h-5 outline-none"></input>
             </div>
             <div className='mr-3 flex gap-2'>
-                <Button className='p-2 w-28  bg-primary font-sans font-bold  '> Add task </Button>
+                <AddNewTask/>
                 <Avatar>
                     <AvatarImage src="https://github.com/shadcn.png" />
                     <AvatarFallback>CN</AvatarFallback>
