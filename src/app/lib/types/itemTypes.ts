@@ -35,7 +35,7 @@ export interface TaskType {
   Subtasks      :SubtaskType[]
 }
 export interface ColumnType {
-    id: number;
+    id:string;
     name: string;
     boardId: string;
     Task: TaskType[]
