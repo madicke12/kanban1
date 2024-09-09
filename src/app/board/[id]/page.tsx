@@ -3,6 +3,7 @@ import React from 'react'
 import { ParamsType } from '../../lib/types/itemTypes'
 import ColumN from '../../../components/column'
 
+
 export default async function page({ params }: { params: ParamsType }) {
     const boardData = await prisma.board.findUnique({
         where: {
@@ -20,6 +21,7 @@ export default async function page({ params }: { params: ParamsType }) {
         <div className='p-3 flex gap-3 overflow overflow-y-auto'>
             <ColumN columns={todos}/>
             <ColumN columns={inProgress}/>
+            <ColumN columns={done}/>
             <ColumN columns={done}/>
         </div>
     )
