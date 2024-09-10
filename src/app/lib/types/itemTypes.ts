@@ -37,8 +37,3 @@ export interface ColumnType {
 }
 
 
-export interface BoardType {
-    id: string;
-    name: string;
-    columns: C;
-}
