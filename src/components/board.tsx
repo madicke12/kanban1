@@ -27,12 +27,10 @@ const Board: React.FC<BoardProps> = ({ boardData }) => {
       });
     });
 
-    // Update the task's column in the database
     try {
       await axios.post('/api/updateColumn', { taskId: task.id, columnId: toColumnId });
     } catch (error) {
       console.error('Failed to update task column:', error);
-      // You might want to implement some error handling or state rollback here
     }
   };
 
