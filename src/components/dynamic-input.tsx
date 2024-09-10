@@ -1,16 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { PlusIcon, TrashIcon , XMarkIcon } from "@heroicons/react/24/solid";
+import { Input } from "@/components/ui/input";
+import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 
 const DynamicInput = ({ type }:any) => {
   const [inputCount, setInputCount] = useState([
     { id: Date.now() * 2, value: "" },
   ]);
 
-  const handleChange = (id:any, e:any) => {
+  const handleChange = (id:number, e:any) => {
     const updatedInputs = inputCount.map((item) => {
       if (item.id === id) {
         return { ...item, value: e.target.value };
@@ -25,17 +25,17 @@ const DynamicInput = ({ type }:any) => {
     setInputCount((prev) => [...prev, { id: Date.now(), value: "" }]);
   };
 
-  const handleDeleteInput = (id:any) => {
+  const handleDeleteInput = (id:number) => {
     setInputCount((prev) => prev.filter((input) => input.id !== id));
   };
 
   return (
     <div>
-      {inputCount.map((input:any) => (
+      {inputCount.map((input:{id:number,value:string}) => (
         <div className="flex  gap-2" key={input.id}>
           <Input
             className="mb-2 outline-none"
-            id={input.id}
+            id={input.id.toString()}
             value={input.value}
             onChange={(e) => handleChange(input.id, e)}
           />
@@ -44,14 +44,14 @@ const DynamicInput = ({ type }:any) => {
           </Button>
         </div>
       ))}
-      <Input name={`${type==='columns' ? 'columns' :'subtasks'}`} value={JSON.stringify(inputCount)} className="hidden"/>
+      <Input name={`${type==='column' ? 'columns' :'subtasks'}`} value={JSON.stringify(inputCount)} className="hidden"/>
       <Button
         type="button"
         onClick={handleAddInput}
-        className="bg-transparent hover:bg-transparent w-full hover:outline-dashed text-gray-400"
+        className="bg-transparent hover:bg-transparent w-full hover:outline-dashed text-gray-400 font-bold"
       >
-        <PlusIcon height={20} />
-        {type === "columns" ? "Add column" : "Add Subtask"}
+        <PlusIcon height={18} />
+        {type === "column" ? "Add column" : "Add Subtask"}
       </Button>
     </div>
   );
