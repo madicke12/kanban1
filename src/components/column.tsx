@@ -1,8 +1,8 @@
+import { ColumnType, TaskType } from '@/app/lib/types/itemTypes';
 import React from 'react';
 import { useDrop } from 'react-dnd';
-import { Button } from "./ui/button";
+import AddTask from './addTask';
 import TaskCard from "./taskCard";
-import { ColumnType, TaskType } from '@/app/lib/types/itemTypes';
 
 interface ColumnProps {
   column: ColumnType;
@@ -35,9 +35,8 @@ const Column: React.FC<ColumnProps> = ({ column, updateColumnTasks }) => {
           ))}
         </div>
       </div>
-      <Button className="w-full bg-transparent text-gray-300 hover:bg-transparent hover:outline-dashed mt-4">
-        + Add task
-      </Button>
+      <AddTask id={column.id} />
+      
     </div>
   );
 };
