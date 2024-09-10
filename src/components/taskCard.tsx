@@ -1,9 +1,7 @@
-import Image from 'next/image'
-import React from 'react'
-import im from '../../public/taskimage.jpg'
 import { TaskType } from '@/app/lib/types/itemTypes'
-import {useDrag} from 'react-dnd'
-import prisma from '@/app/lib/prismaSingleton'
+import Image from 'next/image'
+import { useDrag } from 'react-dnd'
+import im from '../../public/taskimage.jpg'
 
 export default function TaskCard({ task }: { task: TaskType }) {
 const [{isDragging}, drag] = useDrag(() => ({
@@ -14,7 +12,7 @@ const [{isDragging}, drag] = useDrag(() => ({
     }),}))
 
   return (
-    <div className={` bg-white w-[268px] p-[10px] rounded-[4px] shadow-custom relative ${isDragging ? 'opacity-50':''} `}  ref={drag }>
+    <div className={` bg-white w-[268px] p-[10px] rounded-[4px] shadow-custom relative ${isDragging ? 'opacity-50':''} `}  ref={drag}>
       <Image src={im} width={246} height={128} className='rounded-sm ' alt='task banner' />
       <div className='mt-4'>
         <span className='font-bold '>{task.titre}</span>
