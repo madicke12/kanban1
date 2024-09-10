@@ -7,11 +7,6 @@ export  interface ItemsType {
     
 }
 
-export interface BoardType {
-    id: string;
-    name: string;
-    items: ItemsType[]
-}
 
 export interface BoardListeType {
     bListe: {name:string , id:string}[]
@@ -42,6 +37,8 @@ export interface ColumnType {
 }
 
 
-export interface C{
-    0:ColumnType
+export interface BoardType {
+    id: string;
+    name: string;
+    columns: C;
 }
