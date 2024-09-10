@@ -1,7 +1,6 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from 'next/image';
 import searchIcon from '../../public/1x/zoom-3.png';
-import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import AddNewTask from './addNewTask';
 
 const Navbar = () => {
