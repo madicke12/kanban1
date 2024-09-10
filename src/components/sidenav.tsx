@@ -2,10 +2,11 @@
 import Image from 'next/image';
 // import prisma from "../app/lib/prismaSingleton
 
-import Logo from '../../public/logo.svg'
+import { LayoutDashboard, Settings } from 'lucide-react';
 import Link from 'next/link';
-import board from  '../../public/1x/wireframe.png'
 import { usePathname } from 'next/navigation';
+import Logo from '../../public/logo.svg';
+import { AddBoardDialog } from './addBoardDialog';
 
 const SideNav =()=>{
     const pathName = usePathname();
@@ -16,15 +17,16 @@ const SideNav =()=>{
                 <Image src={Logo} alt="logo" width={44} height={44} className=' rounded-[4px]' />
                 <span className="text-black  font-bold text-3xl ">Kanban</span>
             </div>
-            <div className={`flex flex-col w-full h-[248px] gap-1 leading-3 `}>
-                <Link href='board' className={`p-4 flex items-center justify-start gap-2 ${pathName=='/board'?'bg-primary-200' : 'text-black'} hover:bg-primary-200`}>
-                    <Image src={board}  width={20} height={20} alt='board image' />
-                    <span className=' font-bold text-sm text-black'>Board</span>
+            <div className={`flex flex-col w-full h-[248px] gap-8 leading-3 p-3`}>
+                <Link href='board' className={` flex items-center justify-start gap-2 ${pathName.includes('board')?'text-primary' : 'text-gray-500'} `}>
+                    <LayoutDashboard size={18} width={18}/>
+                    <span className=' font-bold text-sm '>Board</span>
                 </Link>
-                <Link href='/settings' className={`p-4 flex items-center justify-start hover:bg-primary-200 gap-2 ${pathName=='/settings'?'bg-primary-200': ''}`}>
-                    <Image src={board} className='' width={20} height={20} alt='board image' />
-                    <span className=' font-bold text-sm text-black'>Settings</span>
+                <Link href='/settings' className={` flex items-center justify-start  gap-2 ${pathName=='/settings'?'text-primary': 'text-gray-500'}`}>
+                    <Settings size={18} width={18}/>
+                    <span className=' font-bold text-sm '>Settings</span>
                 </Link>
+                <AddBoardDialog/>
             </div>
             
         </div>
