@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Button } from "@/components/ui/button";
 import {
   DialogDescription,
@@ -7,12 +8,13 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import DynamicInput from "./dynamic-input";
 
 // import { getServerSession } from "next-auth";
 // import { submit } from "../../lib/actions/actions";
 // import { authOption } from "../api/auth/[...nextauth]/route";
 
- export const AddBoardForm = async () => {
+ export const AddBoardForm =  () => {
   //const session =  await getServerSession(authOption)
   //console.log(session)
   return (
@@ -37,11 +39,12 @@ import { Label } from "./ui/label";
         </div>
         <div className="flex flex-col   mt-4 gap-4">
           <input className="hidden" value={'656f4da9e7241b17b75896bc'} name="userId"/>
-         <input type="text" className="hidden" value={JSON.stringify(['To Do','Doing','Done'])} readOnly name="columns" />
+          <DynamicInput type={'column'}/>
+         {/* <input type="text" className="hidden" value={JSON.stringify(['To Do','Doing','Done'])} readOnly name="columns" /> */}
         </div>
       </div>
       <DialogFooter>
-        <Button className="w-full dark:hover:bg-white dark:hover:text-black" type="submit">
+        <Button className="w-full bg-primary hover:bg-primary-500" type="submit">
           Create new Board
         </Button>
       </DialogFooter>
