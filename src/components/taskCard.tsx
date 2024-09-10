@@ -1,8 +1,9 @@
 import Image from 'next/image'
-import React, { LegacyRef } from 'react'
+import React from 'react'
 import im from '../../public/taskimage.jpg'
 import { TaskType } from '@/app/lib/types/itemTypes'
 import {useDrag} from 'react-dnd'
+import prisma from '@/app/lib/prismaSingleton'
 
 export default function TaskCard({ task }: { task: TaskType }) {
 const [{isDragging}, drag] = useDrag(() => ({
