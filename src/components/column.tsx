@@ -3,6 +3,7 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 import AddTask from './addTask';
 import TaskCard from "./taskCard";
+import TaskModal from './taskDialog';
 
 interface ColumnProps {
   column: ColumnType;
@@ -31,7 +32,8 @@ const Column: React.FC<ColumnProps> = ({ column, updateColumnTasks }) => {
       <div className={`bg-madicke h-fit rounded-[6px] p-[10px] ${isOver ? 'bg-gray-200' : ''}`}>
         <div className="bg-madicke flex flex-col gap-3 min-h-80" ref={drop}>
           {column.Task.map(task => (
-            <TaskCard key={task.id} task={task} />
+            // <TaskCard key={task.id} task={task} />
+            <TaskModal key={task.id} task={task} />
           ))}
         </div>
       </div>
