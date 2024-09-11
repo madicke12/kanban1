@@ -10,12 +10,15 @@ const [{isDragging}, drag] = useDrag(() => ({
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),}))
-
+    task.description= 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, ultricies nunc. Nullam nec purus nec purus feugiat, molestie ipsum et, ultricies nunc. Nullam nec purus'
   return (
-    <div className={` bg-white w-[268px] p-[10px] rounded-[4px] shadow-custom relative ${isDragging ? 'opacity-50':''} `}  ref={drag}>
+    <div className={` bg-white w-[268px] p-[10px] flex flex-col gap-3 items-start rounded-[4px] shadow-custom relative ${isDragging ? 'opacity-50':''} `}  ref={drag}>
       <Image src={im} width={246} height={128} className='rounded-sm ' alt='task banner' />
       <div className='mt-4'>
-        <span className='font-bold '>{task.titre}</span>
+        <span className='font-bold'>{task.titre}</span>
+      </div>
+      <div>
+        <span className='text-gray-400'>{task.description.slice(0,25)+"..."}</span>
       </div>
       <div className='bg-primary-100 text-primary-250 p-1 rounded-xl h-[24px] flex items-center w-[60px] mt-4 justify-center'>label</div>
     </div>
