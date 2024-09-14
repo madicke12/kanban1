@@ -9,12 +9,20 @@ export  interface ItemsType {
 
 
 export interface BoardListeType {
-    bListe: {name:string , id:string}[]
+    bListe: BoardType[]
 }
 
 export interface ParamsType {
     id:string
 }
+
+export interface BoardType {
+    id: string;
+    name: string;
+    userId: string;
+    columns: ColumnType[]
+}
+
 
 export interface SubtaskType {
     id: number;
