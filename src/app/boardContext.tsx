@@ -1,7 +1,8 @@
 'use client'
 
-import { createContext, PropsWithChildren, useContext, useReducer } from 'react';
-import { BoardType, ColumnType } from './lib/types/itemTypes';
+import { createContext, PropsWithChildren, useContext, useEffect, useReducer } from 'react';
+import { BoardType, ColumnType,P } from './lib/types/itemTypes';
+import axios from 'axios';
 
 export const BoardContext = createContext(null);
 export const BoardDispatchContext = createContext(null);
@@ -26,7 +27,16 @@ export function ColumnProvider({children}:PropsWithChildren){
     const [Column,dispatch] = useReducer(
         ColumnReducer,
         initialColumn
-    )
+    );
+    useEffect(()=>{
+      const fetcher = async()=>{
+        const response = await axios.get('/api/getColumn')
+        const column = response.data
+        // dispatch({type:'add', column} )
+      }
+      fetcher()
+  
+    },[Column])
     return(
         <ColumnContext.Provider value={Column}>
             <ColumnDispatchContext.Provider value={dispatch}>
@@ -41,7 +51,15 @@ export function BoardProvider({ children }:PropsWithChildren) {
     BoardReducer,
     initialBoard
   );
+  useEffect(()=>{
+    const fetcher = async()=>{
+      const response = await axios.get('/api/getBoard')
+      const board = response.data
+      dispatch({type:'added', board} )
+    }
+    fetcher()
 
+  },[Board])
   return (
     <BoardContext.Provider value={Board}>
       <BoardDispatchContext.Provider value={dispatch}>
