@@ -23,6 +23,12 @@ export interface BoardType {
     columns: ColumnType[]
 }
 
+export interface PromiseBoardType {
+    id: string;
+    name: string;
+    userId: string;
+    columns: ColumnType[]
+}
 
 export interface SubtaskType {
     id: number;
