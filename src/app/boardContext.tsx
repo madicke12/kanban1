@@ -24,7 +24,7 @@ export function useTaskListe(){return useContext(TaskContext)}
 export function useTaskDispatch(){return useContext(TaskDispatchContext)}
 
 export function ColumnProvider({children}:PropsWithChildren){
-    const [Column,dispatch] = useReducer(
+    const [Column,Cdispatch] = useReducer(
         ColumnReducer,
         initialColumn
     );
@@ -32,14 +32,14 @@ export function ColumnProvider({children}:PropsWithChildren){
       const fetcher = async()=>{
         const response = await axios.get('/api/getColumn')
         const column = response.data
-        // dispatch({type:'add', column} )
+        dispatch({type:'add', column} )
       }
       fetcher()
   
     },[Column])
     return(
         <ColumnContext.Provider value={Column}>
-            <ColumnDispatchContext.Provider value={dispatch}>
+            <ColumnDispatchContext.Provider value={Cdispatch}>
                 {children}
             </ColumnDispatchContext.Provider>
         </ColumnContext.Provider>
@@ -63,7 +63,9 @@ export function BoardProvider({ children }:PropsWithChildren) {
   return (
     <BoardContext.Provider value={Board}>
       <BoardDispatchContext.Provider value={dispatch}>
+        <ColumnDispatchContext.Provider value={dispatch}>
         {children}
+        </ColumnDispatchContext.Provider>
       </BoardDispatchContext.Provider>
     </BoardContext.Provider>
   );
@@ -95,7 +97,7 @@ function BoardReducer(Board: any[], action: { type: string; board:BoardType }) {
   }
 }
 
-function ColumnReducer(Column :any[],action:{type:string; column:ColumnType}){
+function ColumnReducer(Column :any[], action: {type:string; column:ColumnType}){
     const col = action.column
     switch(action.type){
         case 'add':{
@@ -111,8 +113,10 @@ function ColumnReducer(Column :any[],action:{type:string; column:ColumnType}){
         case 'delete':{
             return Column.filter(item=> item.id !== action.column.id)
         }
+        default: {
+            return Column;
+        }
     }
-
 }
 const initialBoard = [
   { id: '658e07148cbf1f61be6fc27b', name: 'zazaza', userId:'656f4da9e7241b17b75896bc' },
