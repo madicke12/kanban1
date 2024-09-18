@@ -4,8 +4,10 @@ import { createContext, PropsWithChildren, useContext, useEffect, useReducer } f
 import { BoardType, ColumnType,P } from './lib/types/itemTypes';
 import axios from 'axios';
 
-export const BoardContext = createContext(null);
-export const BoardDispatchContext = createContext(null);
+export const BoardContext = createContext<any[]>(null);
+import { Dispatch } from 'react';
+
+export const BoardDispatchContext = createContext<Dispatch<{ type: string; board: BoardType }>>(null);
 export const TaskContext= createContext(null)
 export const TaskDispatchContext = createContext(null)
 export const ColumnContext= createContext(null)
@@ -28,15 +30,15 @@ export function ColumnProvider({children}:PropsWithChildren){
         ColumnReducer,
         initialColumn
     );
-    useEffect(()=>{
-      const fetcher = async()=>{
-        const response = await axios.get('/api/getColumn')
-        const column = response.data
-        dispatch({type:'add', column} )
-      }
-      fetcher()
+    // useEffect(()=>{
+    //   const fetcher = async()=>{
+    //     const response = await axios.get('/api/getColumn')
+    //     const column = response.data
+    //     Cdispatch({type:'add', column} )
+    //   }
+    //   fetcher()
   
-    },[Column])
+    // },[Column])
     return(
         <ColumnContext.Provider value={Column}>
             <ColumnDispatchContext.Provider value={Cdispatch}>
@@ -73,11 +75,12 @@ export function BoardProvider({ children }:PropsWithChildren) {
 
 function BoardReducer(Board: any[], action: { type: string; board:BoardType }) {
     const board = action.board
+    console.log('aa',board)
   switch (action.type) {
     case 'added': {
-      return [...Board, {
+      return [...Board, 
         board
-      }];
+      ];
     }
     case 'changed': {
       return Board.map(t => {
@@ -118,8 +121,8 @@ function ColumnReducer(Column :any[], action: {type:string; column:ColumnType}){
         }
     }
 }
-const initialBoard = [
-  { id: '658e07148cbf1f61be6fc27b', name: 'zazaza', userId:'656f4da9e7241b17b75896bc' },
+const initialBoard: any[] = [
+  // { id: '658e07148cbf1f61be6fc27b', name: 'zazaza', userId:'656f4da9e7241b17b75896bc' },
 ];
 
 const initialColumn=[
