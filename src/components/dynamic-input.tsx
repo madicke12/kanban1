@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
-const DynamicInput = ({ type }:any) => {
+const DynamicInput = ({ type , handleChanges }:any) => {
   const [inputCount, setInputCount] = useState([
     { id: Date.now() * 2, value: "" },
   ]);
@@ -44,7 +44,7 @@ const DynamicInput = ({ type }:any) => {
           </Button>
         </div>
       ))}
-      <Input name={`${type==='column' ? 'columns' :'subtasks'}`} value={JSON.stringify(inputCount)} className="hidden"/>
+      <Input onChange={handleChanges} name={`${type==='column' ? 'columns' :'subtasks'}`} value={JSON.stringify(inputCount)} className="hidden"/>
       <Button
         type="button"
         onClick={handleAddInput}
