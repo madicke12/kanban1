@@ -12,10 +12,8 @@ import { Label } from "./ui/label";
 import DynamicInput from "./dynamic-input";
 import { useBoardDispatch } from "@/app/boardContext";
 import { useState } from "react";
-
-// import { getServerSession } from "next-auth";
-// import { submit } from "../../lib/actions/actions";
-// import { authOption } from "../api/auth/[...nextauth]/route";
+import { z } from "zod";
+import axios from "axios";
 
  export const AddBoardForm =  () => {
   const dispatch = useBoardDispatch()
@@ -25,10 +23,24 @@ import { useState } from "react";
     setBoard({...board,[e.target.name]:e.target.value})
   }
 
-  //const session =  await getServerSession(authOption)
-  //console.log(session)
+  const BoardSchema = z.object({
+    name: z.string(),
+    userId: z.string(),
+    columns: z.array(z.unknown()),
+  });
+  const parsedData = BoardSchema.parse(board);
+  console.log('parsedData',parsedData)
+const handleSubmit =async (e:React.FormEvent<HTMLFormElement>)=>{
+  e.preventDefault()
+  if(!parsedData) return
+  // const response = await axios.post('/api/board/create',parsedData)
+  // if(response.status === 200){
+  //   dispatch({type:'added',board:response.data})
+  // }
+  
+}
   return (
-    <form  method="post">
+    <form  method="post" onSubmit={handleSubmit}>
       <DialogHeader>
         <DialogTitle>Add new Board</DialogTitle>
         <DialogDescription>
@@ -55,7 +67,7 @@ import { useState } from "react";
         </div>
       </div>
       <DialogFooter>
-        <Button className="w-full bg-primary hover:bg-primary-500" type="button" onClick={()=> dispatch({type:'added',board})}>
+        <Button className="w-full bg-primary hover:bg-primary-500" type="submit" >
           Create new Board
         </Button>
       </DialogFooter>
