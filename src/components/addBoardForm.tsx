@@ -17,27 +17,32 @@ import axios from "axios";
 
  export const AddBoardForm =  () => {
   const dispatch = useBoardDispatch()
-  const [board, setBoard] = useState({id:'adkjabdkabda', name:'',userId:'',columns:[]})
+  const [board, setBoard] = useState({id:'adkjabdkabda', name:'',userId:'656ccba13712d59d62191785',columns:''})
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
 
     setBoard({...board,[e.target.name]:e.target.value})
   }
 
   const BoardSchema = z.object({
-    name: z.string(),
-    userId: z.string(),
-    columns: z.array(z.unknown()),
+    name: z.string().min(3),
+    userId: z.string().min(3),
+    columns: z.string().min(3),
   });
-  const parsedData = BoardSchema.parse(board);
-  console.log('parsedData',parsedData)
 const handleSubmit =async (e:React.FormEvent<HTMLFormElement>)=>{
   e.preventDefault()
-  if(!parsedData) return
-  // const response = await axios.post('/api/board/create',parsedData)
-  // if(response.status === 200){
-  //   dispatch({type:'added',board:response.data})
-  // }
-  
+  try{
+    const parsedData = BoardSchema.parse(board);
+    if(parsedData){
+      const response = await axios.post('api/board/create',parsedData)
+      console.log(response.data)
+      if(response.status === 200){
+        dispatch({type:'added',board:response.data})
+      }
+    }
+  }catch(err){
+    console.log(err)
+  }
+
 }
   return (
     <form  method="post" onSubmit={handleSubmit}>
@@ -62,7 +67,7 @@ const handleSubmit =async (e:React.FormEvent<HTMLFormElement>)=>{
         </div>
         <div className="flex flex-col   mt-4 gap-4">
           <input className="hidden" value={'656f4da9e7241b17b75896bc'} onChange={handleChange} name="userId"/>
-          <DynamicInput type={'column'} handleChanges={handleChange}/>
+          <DynamicInput setBoard={setBoard} type={'column'} handleChanges={handleChange}/>
          {/* <input type="text" className="hidden" value={JSON.stringify(['To Do','Doing','Done'])} readOnly name="columns" /> */}
         </div>
       </div>
