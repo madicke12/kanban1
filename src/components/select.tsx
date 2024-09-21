@@ -14,7 +14,7 @@ const StatusSelect = () => {
     </SelectItem>
   ));
   return (
-    <Select name="status">
+    <Select name="currentStatus">
       <SelectTrigger className="w-full text-primary">
         <SelectValue placeholder="chose the status" />
       </SelectTrigger>
