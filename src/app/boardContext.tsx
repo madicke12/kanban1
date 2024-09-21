@@ -13,7 +13,6 @@ export const TaskDispatchContext = createContext(null)
 export const ColumnContext= createContext(null)
 export const ColumnDispatchContext = createContext(null)
 
-
 export function useBoardListe(){
     return useContext(BoardContext)       
 }
@@ -28,7 +27,7 @@ export function useTaskDispatch(){return useContext(TaskDispatchContext)}
 export function ColumnProvider({children}:PropsWithChildren){
     const [Column,Cdispatch] = useReducer(
         ColumnReducer,
-        initialColumn
+        []
     );
     // useEffect(()=>{
     //   const fetcher = async()=>{
@@ -51,36 +50,39 @@ export function ColumnProvider({children}:PropsWithChildren){
 export function BoardProvider({ children }:PropsWithChildren) {
   const [Board, dispatch] = useReducer(
     BoardReducer,
-    initialBoard
+    []
   );
   useEffect(()=>{
     const fetcher = async()=>{
-      const response = await axios.get('/api/getBoard')
-      const board = response.data
-      dispatch({type:'added', board} )
+      const board = await (await axios.get('/api/board/getAll')).data
+      dispatch({type:'fetch', board})
     }
     fetcher()
 
-  },[Board])
+  },[])
   return (
     <BoardContext.Provider value={Board}>
       <BoardDispatchContext.Provider value={dispatch}>
-        <ColumnDispatchContext.Provider value={dispatch}>
+        <ColumnProvider>
         {children}
-        </ColumnDispatchContext.Provider>
+        </ColumnProvider>
       </BoardDispatchContext.Provider>
     </BoardContext.Provider>
   );
 }
 
-function BoardReducer(Board: any[], action: { type: string; board:BoardType }) {
+function BoardReducer(Board: any[], action: { type: string; board:BoardType | any}) {
     const board = action.board
     console.log('aa',board)
   switch (action.type) {
+
     case 'added': {
       return [...Board, 
         board
       ];
+    }
+    case 'fetch':{
+      return board
     }
     case 'changed': {
       return Board.map(t => {
@@ -121,10 +123,5 @@ function ColumnReducer(Column :any[], action: {type:string; column:ColumnType}){
         }
     }
 }
-const initialBoard: any[] = [
-  // { id: '658e07148cbf1f61be6fc27b', name: 'zazaza', userId:'656f4da9e7241b17b75896bc' },
-];
 
-const initialColumn=[
-    {id:'dhdhdhdhdhdhd' }
-]
+
