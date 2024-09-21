@@ -11,41 +11,40 @@ export async function POST(req: Request) {
         columns: z.array(z.unknown()),
     });
     const body = await req.json();
-    
-    const { data ,columnsString} = body
-
-    const columns = JSON.parse(columnsString.toString());
-
-    const datas = {
-        data,
-        columns,
+    const { name, userId, columns } = body;
+    const formatedColumns = JSON.parse(columns).map((item: { value: string }) => ({ name: item.value }));
+    const data = {
+        name,
+        userId,
+        columns: formatedColumns,
     };
-
-    console.log(columns);
-
-    try {
-        const parsedData = BoardSchema.parse(datas);
-
-        if (parsedData) {
-            await prisma.board.create({
+    console.log(formatedColumns);
+    
+    try{
+        const parsedData = BoardSchema.parse(data);
+        if(parsedData){
+            const board = await prisma.board.create({
                 data: {
                     ...parsedData,
                     columns: {
-                        create: data.columns.map((item: { name: string }) => ({ name: item.name })),
+                        create: formatedColumns.map((item: { name: string  }) => ({ name: item.name })),
                     },
                 },
                 include: {
                     columns: true,
                 },
             });
+            console.log(board);
+            return NextResponse.json(board, { status: 200 });
         }
-    } catch (err) {
-        console.log(err);
-    } finally {
-        await prisma.$disconnect();
+    }
+    catch(err){
+        console.log(err)
+        return NextResponse.json({ status: 500 });
+
     }
     
     revalidatePath('/board/[id]/page', 'page');
     console.log('done');
-    return NextResponse.json({ status: 200 });
+    // return NextResponse.json({ status: 200 });
 }
