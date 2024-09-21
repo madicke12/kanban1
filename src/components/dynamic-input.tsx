@@ -3,9 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import {useEffect, useState } from "react";
 
-const DynamicInput = ({ type , handleChange }:any) => {
+const DynamicInput = ({ type , handleChanges ,setBoard }:any) => {
   const [inputCount, setInputCount] = useState([
     { id: Date.now() * 2, value: "" },
   ]);
@@ -23,11 +23,24 @@ const DynamicInput = ({ type , handleChange }:any) => {
 
   const handleAddInput = () => {
     setInputCount((prev) => [...prev, { id: Date.now(), value: "" }]);
+    
   };
-
+  
   const handleDeleteInput = (id:number) => {
     setInputCount((prev) => prev.filter((input) => input.id !== id));
+  
+    
   };
+  useEffect(() => {
+    setBoard((prev:any) => {
+      return {
+        ...prev,
+        [type==='column' ? 'columns' :'subtasks']: JSON.stringify(inputCount),
+      };
+    });
+  }
+  , [inputCount]);
+  
 
   return (
     <div>
@@ -44,7 +57,7 @@ const DynamicInput = ({ type , handleChange }:any) => {
           </Button>
         </div>
       ))}
-      <Input onChange={handleChange} name={`${type==='column' ? 'columns' :'subtasks'}`} value={JSON.stringify(inputCount)} className="hidden"/>
+      <Input onChange={handleChanges} name={`${type==='column' ? 'columns' :'subtasks'}`} value={JSON.stringify(inputCount)} className="hidden"/>
       <Button
         type="button"
         onClick={handleAddInput}
