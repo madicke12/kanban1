@@ -13,9 +13,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DynamicInput from "./dynamic-input";
 import StatusSelect from "./select";
+import { useState } from "react";
 // import { createTask } from "@/lib/actions/actions";
 
 const AddTask = ({id}: {id: string}) => {
+  const [board,setBoard]= useState({titre:'',description:'',subtasks:'',currentstatus:'',userId:'',columnId:''})
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
+    setBoard({...board,[e.target.name]:e.target.value})
+  }
   return (
     <Dialog  >
       <DialogTrigger className="w-full">
@@ -34,7 +39,7 @@ const AddTask = ({id}: {id: string}) => {
               id="name"
               className="mt-2"
               placeholder="e.g Do my homework"
-              name="taskName"
+              name="titre"
             />
           </div>
           <div className="mb-3">
@@ -45,7 +50,7 @@ const AddTask = ({id}: {id: string}) => {
           </div>
           <div className="flex flex-col">
             <Label className="mb-2">Subtasks</Label>
-            <DynamicInput/>
+            <DynamicInput setBoard={setBoard}/>
             <div className="mt-2">
             <Label className='mb-2'>Current Status</Label>
             <StatusSelect/>
