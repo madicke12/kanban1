@@ -33,7 +33,7 @@ const handleSubmit =async (e:React.FormEvent<HTMLFormElement>)=>{
   try{
     const parsedData = BoardSchema.parse(board);
     if(parsedData){
-      const response = await axios.post('api/board/create',parsedData)
+      const response = await axios.post('http://localhost:3000/api/board/create',parsedData)
       console.log(response.data)
       if(response.status === 200){
         dispatch({type:'added',board:response.data})
