@@ -6,14 +6,17 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Column from './column';
 import { ColumnType, TaskType } from '@/app/lib/types/itemTypes';
 import axios from 'axios';
+import { useBoardListe } from '@/app/boardContext';
 
 interface BoardProps {
-  boardData: ColumnType[];
+  id:string,
 }
 
-const Board: React.FC<BoardProps> = ({ boardData }) => {
+const Board: React.FC<BoardProps> = ({ id }) => {
+  const boards = useBoardListe()
+  const boardData = boards.find(b => b.id === id)?.columns
+  console.log(boardData)
   const [columns, setColumns] = useState<ColumnType[]>(boardData || []);
-
   const updateColumnTasks = async (task: TaskType, fromColumnId: string, toColumnId: string) => {
     setColumns(prevColumns => {
       return prevColumns.map(column => {
