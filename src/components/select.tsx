@@ -1,3 +1,4 @@
+'use client'
 import {
   Select,
   SelectContent,
@@ -7,14 +8,23 @@ import {
 } from "@/components/ui/select";
 
 const value = ["To Do", "Doing", "Done"];
-const StatusSelect = () => {
-  const SelectElements = value.map((item) => (
-    <SelectItem  key={item} value={item}>
+const StatusSelect = ({setBoard }:any) => {
+const SelectElements = value.map((item) => (
+    <SelectItem    key={item} value={item}>
       {item}
     </SelectItem>
   ));
+  const a = ()=>{
+    setBoard((prev:any)=>{
+      return {
+        ...prev,
+        currentStatus: value
+      }
+    }
+    )
+  }
   return (
-    <Select name="currentStatus">
+    <Select name="currentStatus" onValueChange={a}>
       <SelectTrigger className="w-full text-primary">
         <SelectValue placeholder="chose the status" />
       </SelectTrigger>
