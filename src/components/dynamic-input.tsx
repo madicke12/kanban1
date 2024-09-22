@@ -35,7 +35,7 @@ const DynamicInput = ({ type , handleChanges ,setBoard }:any) => {
     setBoard((prev:any) => {
       return {
         ...prev,
-        [type==='column' ? 'columns' :'subtasks']: JSON.stringify(inputCount),
+        columnsa: JSON.stringify(inputCount),
       };
     });
   }
