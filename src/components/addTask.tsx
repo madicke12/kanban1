@@ -14,12 +14,13 @@ import { Textarea } from "@/components/ui/textarea";
 import DynamicInput from "./dynamic-input";
 import StatusSelect from "./select";
 import { useState } from "react";
+import { any } from "zod";
 // import { createTask } from "@/lib/actions/actions";
 
-const AddTask = ({id}: {id: string}) => {
+const AddTask = ({id}:{id : string|null}) => {
   const [board,setBoard]= useState({titre:'',description:'',subtasks:'',currentstatus:'',userId:'',columnId:''})
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
-    setBoard({...board,[e.target.name]:e.target.value})
+    setBoard(prev=>({...prev,[e.target.name]:e.target.value}))
   }
   return (
     <Dialog  >
@@ -40,13 +41,14 @@ const AddTask = ({id}: {id: string}) => {
               className="mt-2"
               placeholder="e.g Do my homework"
               name="titre"
+              onChange={handleChange}
             />
           </div>
           <div className="mb-3">
             <Label htmlFor="description" className="mb-2">
               Description
             </Label>
-            <Textarea id="description" className="mt-2" placeholder="" name="description" />
+            <Textarea id="description" className="mt-2" placeholder="" onChange={handleChange} name="description" />
           </div>
           <div className="flex flex-col">
             <Label className="mb-2">Subtasks</Label>
@@ -56,8 +58,8 @@ const AddTask = ({id}: {id: string}) => {
             <StatusSelect/>
             </div>
           </div>
-          <input type="text" value={'656f4da9e7241b17b75896bc'} className="hidden" name="userId" />
-          <input type="text" value={id} className="hidden" name="columnId" />
+          <input type="text" value={'656f4da9e7241b17b75896bc'} className="hidden" name="userId" onChange={handleChange}/>
+          {id && <input type="text" value={id} className="hidden" name="columnId" onChange={handleChange} />}
       <DialogFooter>
         <Button className="w-full mt-2 bg-primary-450 hover:bg-primary" type="submit">
           Create new Task
