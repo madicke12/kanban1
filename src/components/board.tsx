@@ -6,32 +6,22 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Column from './column';
 import { ColumnType, TaskType } from '@/app/lib/types/itemTypes';
 import axios from 'axios';
-import { useBoardListe } from '@/app/boardContext';
+import { useBoardListe, useColumnListe } from '@/app/boardContext';
 
 interface BoardProps {
-  id:string,
+  id: string,
 }
 
 const Board: React.FC<BoardProps> = ({ id }) => {
   const boards = useBoardListe()
-  const boardData = boards.find(b => b.id === id)?.columns
-  console.log(boardData)
-  const [columns, setColumns] = useState<ColumnType[]>(boardData || []);
-  const updateColumnTasks = async (task: TaskType, fromColumnId: string, toColumnId: string) => {
-    setColumns(prevColumns => {
-      return prevColumns.map(column => {
-        if (column.id === fromColumnId) {
-          return { ...column, Task: column.Task.filter(t => t.id !== task.id) };
-        }
-        if (column.id === toColumnId) {
-          return { ...column, Task: [...column.Task, { ...task, columnId: toColumnId }] };
-        }
-        return column;
-      });
-    });
-
+  const cols = useColumnListe()
+  const boardData = cols.filter((col: ColumnType) => col.boardId === id);
+  console.log(boardData);
+  const [columns, setColumns] = useState<ColumnType[]>(boardData);
+  console.log('columns', columns);
+  const updateColumnTasks = async (task: TaskType, toColumnId: string) => {
     try {
-      await axios.post('/api/updateColumn', { taskId: task.id, columnId: toColumnId });
+      await axios.post('/api/column/update', { taskId: task.id, columnId: toColumnId });
     } catch (error) {
       console.error('Failed to update task column:', error);
     }
