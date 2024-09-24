@@ -22,11 +22,11 @@ const TaskModal = ({ task }: { task: TaskType }) => {
           <DialogTitle>{task.titre}</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col">
-          <span>Subtask {task.Subtasks.length} </span>
+          {/* <span>Subtask {task.Subtasks.length} </span> */}
 
-          {task.Subtasks.map((cisse) => (
+          {/* {task.Subtasks.map((cisse) => (
             <CheckTask key={cisse.id} cisse={cisse} />
-          ))}
+          ))} */}
           <div className=" px-1 mt-2  items-center">
             <span>Current status</span>
            <TaskStatusSelect cisse={task}/>
