@@ -14,17 +14,17 @@ const SelectElements = value.map((item) => (
       {item}
     </SelectItem>
   ));
-  const a = ()=>{
+  const a = (value)=>{
     setBoard((prev:any)=>{
       return {
         ...prev,
-        currentStatus: value
+        currentstatus: value
       }
     }
     )
   }
   return (
-    <Select name="currentStatus" onValueChange={a}>
+    <Select name="currentStatus" onValueChange={(value)=>a(value)}>
       <SelectTrigger className="w-full text-primary">
         <SelectValue placeholder="chose the status" />
       </SelectTrigger>
