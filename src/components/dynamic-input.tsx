@@ -25,7 +25,6 @@ const DynamicInput = ({ type , handleChanges ,setBoard }:any) => {
     setInputCount((prev) => [...prev, { id: Date.now(), value: "" }]);
     
   };
-  
   const handleDeleteInput = (id:number) => {
     setInputCount((prev) => prev.filter((input) => input.id !== id));
   
@@ -35,7 +34,7 @@ const DynamicInput = ({ type , handleChanges ,setBoard }:any) => {
     setBoard((prev:any) => {
       return {
         ...prev,
-        columnsa: JSON.stringify(inputCount),
+        [type==='column' ? 'columns' :'subtasks']: JSON.stringify(inputCount),
       };
     });
   }
