@@ -5,7 +5,8 @@ import { NextResponse } from "next/server";
 export async function PUT(req: Request) {
     const body = await req.json()
     const { subtaskId , isDone } = body;
-    const response =await prisma.subtask.update({
+    console.log(subtaskId,isDone)
+    const subtask =await prisma.subtask.update({
         where: {
             id: subtaskId,
         },
@@ -13,5 +14,5 @@ export async function PUT(req: Request) {
             isDone : isDone
         },
     });
-    return NextResponse.json({ status: 200 });
+    return NextResponse.json({subtask})
 }
