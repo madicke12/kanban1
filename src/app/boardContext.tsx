@@ -3,23 +3,31 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useReducer } from 'react';
 import { BoardType, ColumnType, SubtaskType, TaskType } from './lib/types/itemTypes';
 import axios from 'axios';
-
-export const BoardContext = createContext<any[]>(null);
 import { Dispatch } from 'react';
 
+export const BoardContext = createContext<any[]>(null);
 export const BoardDispatchContext = createContext<Dispatch<{ type: string; board: BoardType }>>(null);
-export const TaskContext = createContext<TaskType[]>(null)
 
+export const TaskContext = createContext<TaskType[]>(null)
 export const TaskDispatchContext = createContext<Dispatch<{ type: string; task: TaskType }>>(() => null)
+
 export const ColumnContext = createContext<ColumnType[]>([]);
 export const ColumnDispatchContext = createContext<Dispatch<{ type: string; column?: ColumnType }>>(() => null)
 
+export const SubTaskContext = createContext<SubtaskType[]>([]);
+export const SubTaskDispatchContext = createContext<Dispatch<{ type: string; subtask: SubtaskType }>>(() => null)
+
 export function useBoardListe() {return useContext(BoardContext)}
 export function useBoardDispatch() {return useContext(BoardDispatchContext)}
+
 export function useColumnListe() { return useContext(ColumnContext) }
 export function useColumnDispatch() { return useContext(ColumnDispatchContext) }
+
 export function useTaskListe() { return useContext(TaskContext) }
 export function useTaskDispatch() { return useContext(TaskDispatchContext) }
+
+export function useSubTaskListe() { return useContext(SubTaskContext) }
+export function useSubTaskDispatch() { return useContext(SubTaskDispatchContext) }
 
 
 function ColumnProvider({ children }: PropsWithChildren) {
@@ -68,6 +76,30 @@ function TaskProvider({ children }: PropsWithChildren) {
     </TaskContext.Provider>
   )
 }
+
+function SubTaskProvider({ children }: PropsWithChildren) {
+  const [Subtask, dispatch] = useReducer(
+    SubTaskReducer,
+    []
+  );
+  useEffect(() => {
+    const fetcher = async () => {
+      const response = await axios.get('/api/subtask/getAll')
+      const subtask = response.data
+      console.log('subtask', subtask)
+      dispatch({ type: 'fetch',subtask })
+    }
+    fetcher()
+
+  }, [])
+  return (
+    <SubTaskContext.Provider value={Subtask}>
+      <SubTaskDispatchContext.Provider value={dispatch}>
+        {children}
+      </SubTaskDispatchContext.Provider>
+    </SubTaskContext.Provider>
+  )
+}
 export function BoardProvider({ children }: PropsWithChildren) {
   const [Board, dispatch] = useReducer(
     BoardReducer,
@@ -86,7 +118,9 @@ export function BoardProvider({ children }: PropsWithChildren) {
       <BoardDispatchContext.Provider value={dispatch}>
         <ColumnProvider>
           <TaskProvider>
+            <SubTaskProvider>
           {children}
+            </SubTaskProvider>
           </TaskProvider>
         </ColumnProvider>
       </BoardDispatchContext.Provider>
@@ -190,11 +224,6 @@ function SubTaskReducer(Subtask: any[], action: { type: string; subtask: Subtask
   console.log('aa', subtask)
   switch (action.type) {
 
-    case 'added': {
-      return [...subtask,
-        subtask
-      ];
-    }
     case 'fetch': {
       return subtask
     }
