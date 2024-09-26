@@ -9,8 +9,11 @@ import {
 import CheckTask from "./checktask";
 import TaskCard from "./taskCard";
 import { TaskStatusSelect } from "./taskStatusSelect";
+import { useSubTaskListe } from "@/app/boardContext";
 
 const TaskModal = ({ task }: { task: TaskType }) => {
+  const subtasks = useSubTaskListe()
+  const sub = subtasks.filter((sub)=>sub.taskId === task.id)
   //console.log(madicke.Subtasks)
   return (
     <Dialog>
@@ -22,11 +25,11 @@ const TaskModal = ({ task }: { task: TaskType }) => {
           <DialogTitle>{task.titre}</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col">
-          {/* <span>Subtask {task.Subtasks.length} </span> */}
+          <span>Subtask {sub.length} </span>
 
-          {/* {task.Subtasks.map((cisse) => (
+          {sub.map((cisse) => (
             <CheckTask key={cisse.id} cisse={cisse} />
-          ))} */}
+          ))}
           <div className=" px-1 mt-2  items-center">
             <span>Current status</span>
            <TaskStatusSelect cisse={task}/>
