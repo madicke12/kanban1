@@ -13,9 +13,9 @@ const CheckTask = ({ cisse  }:{cisse :SubtaskType}) => {
   console.log(cisse)
   const subdispatch = useSubTaskDispatch()
   const handleChange = async () => {
+    setChecked(!isChecked);
    const a = (await axios.put('/api/subtask/update', { subtaskId: cisse.id , isDone:!cisse.isDone})).data;
       subdispatch({type:'update',subtask:a.subtask})
-      setChecked(!isChecked);
   };
 
   return (
