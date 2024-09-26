@@ -33,7 +33,8 @@ export interface PromiseBoardType {
 export interface SubtaskType {
     id: number;
     name: string;
-    done: boolean;
+    isDone: boolean;
+    taskId: string;
 }
 export interface TaskType {
   id         : string    
