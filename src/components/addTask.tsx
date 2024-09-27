@@ -18,10 +18,10 @@ import { z } from "zod";
 import axios from "axios";
 // import { createTask } from "@/lib/actions/actions";
 
-const AddTask = ({ id , Task }: { id: string | null , Task:any }) => {
-  const [board, setBoard] = useState({ titre: '', description: '', subtasks: '', currentstatus: '', userId: '', columnId: '' })
+const AddTask = ({ id  }: { id: string }) => {
+  const [task, setTask] = useState({ titre: '', description: '', subtasks: '', currentstatus: '', userId: '', columnId: '' })
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBoard(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    setTask(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   const TaskSchema = z.object({
@@ -36,7 +36,7 @@ const AddTask = ({ id , Task }: { id: string | null , Task:any }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const parsedData = TaskSchema.parse(board);
+      const parsedData = TaskSchema.parse(task);
       if (parsedData) {
         const task = (await axios.post('http://localhost:3000/api/task/create', parsedData)).data
       }
@@ -78,10 +78,10 @@ const AddTask = ({ id , Task }: { id: string | null , Task:any }) => {
             </div>
             <div className="flex flex-col">
               <Label className="mb-2">Subtasks</Label>
-              <DynamicInput setBoard={setBoard} />
+              <DynamicInput setBoard={setTask} />
               <div className="mt-2">
                 <Label className='mb-2'>Current Status</Label>
-                <StatusSelect setBoard={setBoard} />
+                <StatusSelect setBoard={setTask} />
               </div>
             </div>
             <input type="text" value={'656f4da9e7241b17b75896bc'} className="hidden" name="userId" onChange={handleChange} />
