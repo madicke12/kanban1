@@ -46,7 +46,7 @@ const Column: React.FC<ColumnProps> = ({ column, updateColumnTasks }) => {
           ))}
         </div>
       </div>
-      {/* <AddTask id={column.id} setTask={setTask} /> */}
+      <AddTask id={column.id}  />
       
     </div>
   );
