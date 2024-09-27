@@ -1,4 +1,6 @@
 'use client'
+import { useBoardListe, useColumnListe } from "@/app/boardContext";
+import { ParamsType } from "@/app/lib/types/itemTypes";
 import {
   Select,
   SelectContent,
@@ -6,10 +8,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useParams } from "next/navigation";
 
-const value = ["To Do", "Doing", "Done"];
-const StatusSelect = ({setBoard }:any) => {
-const SelectElements = value.map((item) => (
+const StatusSelect = ({setBoard } :{setBoard:any}) => {
+const params = useParams()
+const columns = useColumnListe().filter((column) => column.boardId === params.id).map((column) => column.name);
+const SelectElements = columns.map((item) => (
     <SelectItem    key={item} value={item}>
       {item}
     </SelectItem>
