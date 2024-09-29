@@ -52,7 +52,7 @@ const AddTask = ({ id  }: { id: string }) => {
       <Dialog  >
         <DialogTrigger className="w-full">
           <Button className="w-full bg-transparent text-gray-300 hover:bg-transparent hover:outline-dashed mt-4">
-            + Add task
+            + Add Task
           </Button>
         </DialogTrigger>
         <DialogContent>
