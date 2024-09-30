@@ -51,7 +51,7 @@ const DynamicInput = ({ type , handleChanges ,setBoard }:any) => {
             value={input.value}
             onChange={(e) => handleChange(input.id, e)}
           />
-          <Button type="button" className="bg-transparent hover:bg-transparent hover:outline-dashed hover:outline-2  " onClick={() => handleDeleteInput(input.id)}>
+          <Button type="button" className="bg-transparent hover:bg-transparent hover:outline-dashed hover:outline-2 shadow-none " onClick={() => handleDeleteInput(input.id)}>
             <XMarkIcon height={16} color="gray" />
           </Button>
         </div>
@@ -60,7 +60,7 @@ const DynamicInput = ({ type , handleChanges ,setBoard }:any) => {
       <Button
         type="button"
         onClick={handleAddInput}
-        className="bg-transparent hover:bg-transparent w-full hover:outline-dashed text-gray-400 font-bold"
+        className="bg-transparent hover:bg-transparent w-full hover:outline-dashed text-gray-400 font-bold shadow-none"
       >
         <PlusIcon height={18} />
         {type === "column" ? "Add column" : "Add Subtask"}
