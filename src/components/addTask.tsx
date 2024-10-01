@@ -16,14 +16,16 @@ import DynamicInput from "./dynamic-input";
 import StatusSelect from "./select";
 import { useState } from "react";
 import { z } from "zod";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 // import { createTask } from "@/lib/actions/actions";
-
+import { upload } from '@vercel/blob/client';
 const AddTask = ({ id  }: { id: string }) => {
   const [task, setTask] = useState({ titre: '', description: '', subtasks: '', currentstatus: '', userId: '', columnId: id })
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const [blob, setBlob] = useState<PutBlobResult | null>(null);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //madikce
     setTask(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
