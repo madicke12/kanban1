@@ -14,16 +14,23 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DynamicInput from "./dynamic-input";
 import StatusSelect from "./select";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 // import { createTask } from "@/lib/actions/actions";
 import { upload } from '@vercel/blob/client';
+import { type PutBlobResult } from '@vercel/blob';
+import { InputFile } from "./fileInput";
+import { Value } from "@radix-ui/react-select";
+import axios from "axios";
+import { useTaskDispatch } from "@/app/boardContext";
+
 const AddTask = ({ id  }: { id: string }) => {
-  const [task, setTask] = useState({ titre: '', description: '', subtasks: '', currentstatus: '', userId: '', columnId: id })
+  const dispatch  = useTaskDispatch()
+  const [task, setTask] = useState({ titre: '', description: '', subtasks: '', currentstatus: '', userId: '', columnId: id , picture: '' });
   const inputFileRef = useRef<HTMLInputElement>(null);
-  const [blob, setBlob] = useState<PutBlobResult | null>(null);
+  const [blob, setBlob] = useState<PutBlobResult>();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     //madikce
     setTask(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -48,6 +55,26 @@ const AddTask = ({ id  }: { id: string }) => {
   })
   const handleSubmit = async (value : z.infer<typeof TaskSchema>) => {
     console.log({ ...task,...value})
+    const file = inputFileRef?.current.files[0];
+    console.log(file)
+    const newBlob = await upload(file.name, file, {
+      access: 'public',
+      handleUploadUrl: '/api/image/upload',
+    });
+
+    setBlob(newBlob);
+  const data = { ...task,...value ,picture: newBlob.url} 
+
+    try{
+      const response = await axios.post('http://localhost:3000/api/task/create', data)
+      console.log(response.data)
+      // dispatch({type:'added', task: response.data})
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
+
   //   try {
   //     const parsedData = TaskSchema.parse(task);
   //     if (parsedData) {
@@ -59,7 +86,7 @@ const AddTask = ({ id  }: { id: string }) => {
   //     console.log(err)
   //   }
   // }
-  }
+  
     // await createTask(board)
 
     return (
@@ -79,7 +106,7 @@ const AddTask = ({ id  }: { id: string }) => {
               <FormField control={form.control} name="titre" render={
                 ({field})=>(
                   <FormItem>
-                    <FormLabel htmlFor="titre" className="mb-2">
+                    <FormLabel htmlFor="titre" className="mb-2 font-sans font-bold">
                       Title
                     </FormLabel>
                     <FormControl>
@@ -95,7 +122,7 @@ const AddTask = ({ id  }: { id: string }) => {
             <FormField control={form.control} name="description" render={
                 ({field})=>(
                   <FormItem>
-                    <FormLabel htmlFor="description" className="mb-2">
+                    <FormLabel htmlFor="description" className="mb-2 font-sans font-bold">
                       Description
                     </FormLabel>
                     <FormControl>
@@ -106,11 +133,15 @@ const AddTask = ({ id  }: { id: string }) => {
                 )
               } />
             </div>
+            <div className="mb-3 grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="picture font-sans font-bold">Photo <span className="text-sm text-gray-300 ml-3">(Facultative)</span></Label>
+            <Input id="picture" ref={inputFileRef} type="file" />
+            </div>
             <div className="flex flex-col">
-              <Label className="mb-2">Subtasks</Label>
+              <Label className="mb-2 font-sans font-bold">Subtasks</Label>
               <DynamicInput setBoard={setTask}  />
               <div className="mt-2">
-                <Label className='mb-2'>Current Status</Label>
+                <Label className='mb-2 font-sans font-bold'>Current Status</Label>
                 <StatusSelect setBoard={setTask} />
               </div>
             </div>
