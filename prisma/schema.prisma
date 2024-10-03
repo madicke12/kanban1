@@ -64,6 +64,7 @@ model Task {
   description   String
   titre         String
   Subtasks      Subtask[]
+  picture      String?
   Column        Column    @relation(fields: [columnId], references: [id])
 }
   
