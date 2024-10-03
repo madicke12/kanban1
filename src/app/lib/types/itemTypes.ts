@@ -42,6 +42,7 @@ export interface TaskType {
   currentStatus: string
   description  : string
   titre        : string
+  picture      : string
   Subtasks      :SubtaskType[]
 }
 export interface ColumnType {
