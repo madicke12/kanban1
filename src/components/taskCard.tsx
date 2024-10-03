@@ -1,7 +1,6 @@
 import { TaskType } from '@/app/lib/types/itemTypes'
 import Image from 'next/image'
 import { useDrag } from 'react-dnd'
-import im from '../../public/taskimage.jpg'
 
 export default function TaskCard({ task }: { task: TaskType }) {
 const [{isDragging}, drag] = useDrag(() => ({
@@ -13,7 +12,7 @@ const [{isDragging}, drag] = useDrag(() => ({
     task.description= 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, ultricies nunc. Nullam nec purus nec purus feugiat, molestie ipsum et, ultricies nunc. Nullam nec purus'
   return (
     <div className={` bg-white w-[268px] p-[10px] flex flex-col gap-3 items-start rounded-[4px] shadow-custom relative ${isDragging ? 'opacity-50':''} `}  ref={drag}>
-      <Image src={im} width={246} height={128} className='rounded-sm ' alt='task banner' />
+      {task.picture && <Image src={task.picture} loading='lazy' width={246} height={128} className='rounded-sm ' alt='task banner' />}
       <div className='mt-4'>
         <span className='font-bold'>{task.titre}</span>
       </div>
