@@ -25,10 +25,11 @@ import { InputFile } from "./fileInput";
 import { Value } from "@radix-ui/react-select";
 import axios from "axios";
 import { useTaskDispatch } from "@/app/boardContext";
+import { revalidatePath } from "next/cache";
 
 const AddTask = ({ id  }: { id: string }) => {
   const dispatch  = useTaskDispatch()
-  const [task, setTask] = useState({ titre: '', description: '', subtasks: '', currentstatus: '', userId: '', columnId: id , picture: '' });
+  const [task, setTask] = useState({ titre: '', description: '', subtasks: '', currentstatus: '', userId: '656f4da9e7241b17b75896bc', columnId: id , picture: '' });
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [blob, setBlob] = useState<PutBlobResult>();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +69,7 @@ const AddTask = ({ id  }: { id: string }) => {
     try{
       const response = await axios.post('http://localhost:3000/api/task/create', data)
       console.log(response.data)
-      // dispatch({type:'added', task: response.data})
+      dispatch({type:'added', task: response.data})
     }
     catch(err){
       console.log(err)
