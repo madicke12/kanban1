@@ -7,6 +7,7 @@ import Column from './column';
 import { ColumnType, TaskType } from '@/app/lib/types/itemTypes';
 import axios from 'axios';
 import { useBoardListe, useColumnListe } from '@/app/boardContext';
+import { Button } from './ui/button';
 
 interface BoardProps {
   id: string,
@@ -33,6 +34,7 @@ const Board: React.FC<BoardProps> = ({ id }) => {
         {columns.map((column: ColumnType) => (
           <Column key={column.id} column={column} updateColumnTasks={updateColumnTasks} />
         ))}
+        <Button className='w-full max-w-[240px] bg-primary flex items-center justify-center h-[100vh] font-bold'>Add Column</Button>
       </div>
     </DndProvider>
   );
