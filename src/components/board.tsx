@@ -8,7 +8,7 @@ import { ColumnType, TaskType } from '@/app/lib/types/itemTypes';
 import axios from 'axios';
 import { useBoardListe, useColumnListe } from '@/app/boardContext';
 import { Button } from './ui/button';
-
+import { SessionAuth } from "supertokens-auth-react/recipe/session"
 interface BoardProps {
   id: string,
 }
