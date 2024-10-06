@@ -1,8 +1,7 @@
 'use client'
+import { ClerkProvider } from '@clerk/nextjs';
 import localFont from "next/font/local";
 import "./globals.css";
-import { SuperTokensProvider } from "./supertokensProvider";
-
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -22,14 +21,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <SuperTokensProvider>
+    <html lang="en">     
+    <ClerkProvider> 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
       </body>
-      </SuperTokensProvider>
+    </ClerkProvider>
     </html>
   );
 }
