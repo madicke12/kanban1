@@ -18,7 +18,7 @@ const SelectElements = columns.map((item) => (
       {item}
     </SelectItem>
   ));
-  const a = (value)=>{
+  const a = (value:any)=>{
     setBoard((prev:any)=>{
       return {
         ...prev,
