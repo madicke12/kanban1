@@ -12,11 +12,14 @@ import {
 } from "@/components/ui/select"
 import { useRouter } from "next/navigation"
 import { useBoardListe } from "@/app/boardContext"
+import { useSession } from "next-auth/react"
 
 // { bListe }: BoardListeType
 export function BoardSelect() {
     const bListe = useBoardListe() 
-    const Element = bListe.map(item => { return  <SelectItem key={item.id} className="cursor-pointer" value={item.id}> {item.name}</SelectItem> })
+    const {data} = useSession()
+    const userBoard = bListe.filter(item => item.userId === data?.user?.id) 
+    const Element = userBoard.map(item => { return  <SelectItem key={item.id} className="cursor-pointer" value={item.id}> {item.name}</SelectItem> })
     console.log(bListe)
     const router = useRouter();
 
