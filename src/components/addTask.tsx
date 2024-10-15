@@ -56,7 +56,11 @@ const AddTask = ({ id  }: { id: string }) => {
   })
   const handleSubmit = async (value : z.infer<typeof TaskSchema>) => {
     console.log({ ...task,...value})
-    const file = inputFileRef?.current.files[0];
+    const file = inputFileRef.current?.files?.[0];
+    if (!file) {
+      console.error("No file selected");
+      return;
+    }
     console.log(file)
     const newBlob = await upload(file.name, file, {
       access: 'public',
