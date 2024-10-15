@@ -5,10 +5,10 @@ import { BoardType, ColumnType, SubtaskType, TaskType } from './lib/types/itemTy
 import axios from 'axios';
 import { Dispatch } from 'react';
 
-export const BoardContext = createContext<any[]>(null);
-export const BoardDispatchContext = createContext<Dispatch<{ type: string; board: BoardType }>>(null);
+export const BoardContext = createContext<any[]>([]);
+export const BoardDispatchContext = createContext<Dispatch<{ type: string; board: BoardType }>>(() => null);
 
-export const TaskContext = createContext<TaskType[]>(null)
+export const TaskContext = createContext<TaskType[]>([])
 export const TaskDispatchContext = createContext<Dispatch<{ type: string; task: TaskType }>>(() => null)
 
 export const ColumnContext = createContext<ColumnType[]>([]);
