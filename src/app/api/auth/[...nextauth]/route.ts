@@ -14,7 +14,15 @@ const handler = NextAuth({
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-          })
+            profile(profile) {
+              return {
+                id: profile.sub,
+                name: profile.name,
+                user: profile.given_name,
+                email: profile.email,
+                image: profile.picture,
+              };
+          }})
     ], callbacks: {
         session: ({ session, user }: { session: Session, user :any}) => ({
           ...session,
