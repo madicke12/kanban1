@@ -12,6 +12,7 @@ import { useParams } from "next/navigation";
 
 const StatusSelect = ({setBoard } :{setBoard:any}) => {
 const params = useParams()
+
 const columns = useColumnListe().filter((column) => column.boardId === params.id).map((column) => column.name);
 const SelectElements = columns.map((item) => (
     <SelectItem    key={item} value={item}>
