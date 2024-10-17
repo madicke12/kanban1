@@ -15,7 +15,8 @@ interface BoardProps {
 const Board: React.FC<BoardProps> = ({ id }) => {
   const boards = useBoardListe()
   const cols = useColumnListe()
-  const boardData = cols.filter((col: ColumnType) => col.boardId === id);
+  console.log('cols', cols);
+  const boardData = cols ? cols.filter((col: ColumnType) => col.boardId === id) : [];
   console.log(boardData);
   const [columns, setColumns] = useState<ColumnType[]>(boardData);
   console.log('columns', columns);
