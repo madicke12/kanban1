@@ -24,7 +24,7 @@ model Column {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
   boardId String @db.ObjectId
   name    String
-  Board   Board  @relation(fields: [boardId], references: [id])
+  Board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
   Task    Task[]
 }
   
@@ -35,7 +35,7 @@ model Subtask {
   isDone Boolean
   name   String
   taskId String  @db.ObjectId
-  Task   Task    @relation(fields: [taskId], references: [id])
+  Task   Task    @relation(fields: [taskId], references: [id] , onDelete: Cascade)
 }
   
 model Task {
@@ -46,7 +46,7 @@ model Task {
   titre         String
   Subtasks      Subtask[]
   picture      String?
-  Column        Column    @relation(fields: [columnId], references: [id])
+  Column        Column    @relation(fields: [columnId], references: [id], onDelete: Cascade)
 }
   
 
