@@ -20,7 +20,7 @@ export function BoardSelect() {
     const bListe = useBoardListe() 
     const {data} = useSession()
     const user = data?.user as userType
-    const userBoard = bListe.filter(item => item.userId === user.id) 
+    const userBoard = user ? bListe.filter(item => item.userId === user.id) : []
     const Element = userBoard.map(item => { return  <SelectItem key={item.id} className="cursor-pointer" value={item.id}> {item.name}</SelectItem> })
     console.log(bListe)
     const router = useRouter();
