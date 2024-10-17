@@ -34,7 +34,7 @@ const Board: React.FC<BoardProps> = ({ id }) => {
         {columns.map((column: ColumnType) => (
           <Column key={column.id} column={column} updateColumnTasks={updateColumnTasks} />
         ))}
-        <Button className='w-full max-w-[220px] bg-primary flex items-center justify-center  font-bold'>Add Column</Button>
+        <Button className='w-full max-w-[220px] bg-primary flex items-center justify-center h-[100vh] font-bold'>Add Column</Button>
       </div>
     </DndProvider>
   );
