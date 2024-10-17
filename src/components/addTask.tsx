@@ -71,7 +71,7 @@ const AddTask = ({ id  }: { id: string }) => {
   const data = { ...task,...value ,picture: newBlob.url} 
 
     try{
-      const response = await axios.post('http://localhost:3000/api/task/create', data)
+      const response = await axios.post('/api/task/create', data)
       console.log(response.data)
       dispatch({type:'added', task: response.data})
     }
