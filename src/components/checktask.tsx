@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 
 import React, { useState } from 'react';
-import { set } from "zod";
 
 const CheckTask = ({ cisse  }:{cisse :SubtaskType}) => {
   const [isChecked, setChecked] = useState(cisse.isDone);
@@ -20,7 +19,7 @@ const CheckTask = ({ cisse  }:{cisse :SubtaskType}) => {
 
   return (
       <div
-        className="bg-primary-200 hover:bg-primary-250  rounded-sm px-1 mt-2 flex items-center"
+        className="bg-primary-100 hover:bg-primary-150  rounded-sm px-1 mt-2 flex items-center"
       >
         <Input
           className="w-[17px] mr-2"
