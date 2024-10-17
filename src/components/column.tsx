@@ -1,10 +1,11 @@
 'use client'
+import { useTaskDispatch, useTaskListe } from '@/app/boardContext';
 import { ColumnType, TaskType } from '@/app/lib/types/itemTypes';
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import AddTask from './addTask';
+import { DropdownMenuRadioGroupDemo } from './drop';
 import TaskModal from './taskDialog';
-import { useTaskDispatch, useTaskListe } from '@/app/boardContext';
 
 interface ColumnProps {
   column: ColumnType;
@@ -29,12 +30,13 @@ const Column: React.FC<ColumnProps> = ({ column, updateColumnTasks }) => {
       isOver: !!monitor.isOver(),
     }),
   }));
+ 
 
   return (
     <div className="w-[288px]">
       <div className="flex items-center justify-between">
         <div className="text-xl font-bold">{column.name}</div>
-        <span className="font-bold">...</span>
+        <DropdownMenuRadioGroupDemo column={column} />
       </div>
       <div className={`bg-madicke h-fit rounded-[6px] p-[10px] ${isOver ? 'bg-gray-200' : ''}`}>
         <div
