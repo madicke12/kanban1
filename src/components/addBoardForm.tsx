@@ -14,10 +14,13 @@ import { useBoardDispatch } from "@/app/boardContext";
 import { useState } from "react";
 import { z } from "zod";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import { userType } from "@/app/lib/types/itemTypes";
 
  export const AddBoardForm =  () => {
+  const user = useSession().data?.user as userType
   const dispatch = useBoardDispatch()
-  const [board, setBoard] = useState({id:'adkjabdkabda', name:'',userId:'656ccba13712d59d62191785',columns:''})
+  const [board, setBoard] = useState({name:'',userId:user.id,columns:''})
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
 
     setBoard({...board,[e.target.name]:e.target.value})
@@ -33,8 +36,7 @@ const handleSubmit =async (e:React.FormEvent<HTMLFormElement>)=>{
   try{
     const parsedData = BoardSchema.parse(board);
     if(parsedData){
-      const response = await axios.post('http://localhost:3000/api/board/create',parsedData)
-      console.log(response.data)
+      const response = await axios.post('/api/board/create',parsedData)
       if(response.status === 200){
         dispatch({type:'added',board:response.data})
       }
