@@ -1,6 +1,5 @@
 'use client';
 
-import { useBoardListe, useColumnListe } from '@/app/boardContext';
 import { ColumnType, TaskType } from '@/app/lib/types/itemTypes';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -8,16 +7,14 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Column from './column';
 import { Button } from './ui/button';
+import { useBoardStore, useColumnStore } from '@/app/boardContext';
 interface BoardProps {
   id: string,
 }
 
 const Board: React.FC<BoardProps> = ({ id }) => {
-  const boards = useBoardListe()
-  const cols = useColumnListe()
-  console.log('cols', cols);
-  // const boardData = cols ? cols.filter((col: ColumnType) => col.boardId === id) : [];
-  // console.log(boardData);
+  const boards = useBoardStore((state) => state.boards);
+  const cols = useColumnStore((state) => state.columns);
   const [columns, setColumns] = useState<ColumnType[]>(cols.filter((col: ColumnType) => col.boardId === id));
   console.log('columns', columns);
   const updateColumnTasks = async (task: TaskType, toColumnId: string) => {

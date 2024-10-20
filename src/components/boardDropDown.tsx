@@ -11,13 +11,13 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { useRouter } from "next/navigation"
-import { useBoardListe } from "@/app/boardContext"
+import { useBoardStore } from "@/app/boardContext"
 import { useSession } from "next-auth/react"
 import { userType } from "@/app/lib/types/itemTypes"
 
 // { bListe }: BoardListeType
 export function BoardSelect() {
-    const bListe = useBoardListe() 
+    const bListe = useBoardStore((state) => state.boards) 
     const {data} = useSession()
     const user = data?.user as userType
     const userBoard = user ? bListe.filter(item => item.userId === user.id) : []
