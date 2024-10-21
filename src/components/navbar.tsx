@@ -2,12 +2,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from 'next/image';
 import searchIcon from '../../public/1x/zoom-3.png';
-import { useSession } from "next-auth/react";
-import { userType } from "@/app/lib/types/itemTypes";
+import { useUserStore } from "@/app/boardContext";
 
 const Navbar = () => {
-    const user = useSession().data?.user as userType
-    const src = user.image
+    
+    const user = useUserStore((state) => state.user);
+    const src = user ? user.image : '';
+    console.log(src)
     return (
         <nav className="flex items-center justify-between   sticky top-0 border-b border-secondary-100 h-16 w-full bg-white ">
             <div className=" items-center p-2 ml-3 gap-1   bg-gray-100 rounded-sm flex">
