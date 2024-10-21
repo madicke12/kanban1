@@ -1,5 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client'
+import { useBoardStore } from "@/app/boardContext";
+import { userType } from "@/app/lib/types/itemTypes";
 import { Button } from "@/components/ui/button";
 import {
   DialogDescription,
@@ -7,19 +9,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import DynamicInput from "./dynamic-input";
-import { useBoardDispatch } from "@/app/boardContext";
-import { useState } from "react";
-import { z } from "zod";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { userType } from "@/app/lib/types/itemTypes";
+import { useState } from "react";
+import { z } from "zod";
+import DynamicInput from "./dynamic-input";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
  export const AddBoardForm =  () => {
   const user = useSession().data?.user as userType
-  const dispatch = useBoardDispatch()
+  const addboard = useBoardStore((state)=>state.addBoard)
   const [board, setBoard] = useState({name:'',userId:user.id,columns:''})
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
 
@@ -38,7 +38,7 @@ const handleSubmit =async (e:React.FormEvent<HTMLFormElement>)=>{
     if(parsedData){
       const response = await axios.post('/api/board/create',parsedData)
       if(response.status === 200){
-        dispatch({type:'added',board:response.data})
+        addboard(response.data)
       }
     }
   }catch(err){
