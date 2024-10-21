@@ -2,8 +2,9 @@
 
 import { create } from 'zustand'
 import axios from 'axios'
-import { BoardType, ColumnType, SubtaskType, TaskType } from './lib/types/itemTypes'
+import { BoardType, ColumnType, SubtaskType, TaskType, userType } from './lib/types/itemTypes'
 import { PropsWithChildren, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 
 // Zustand store for Board
 interface BoardState {
@@ -91,6 +92,14 @@ interface SubtaskState {
   deleteSubtask: (id: string) => void
 }
 
+export interface userState {
+  user: userType | null 
+  setUser: (user: userType ) => void
+}
+export const useUserStore = create<userState>((set) => ({
+  user: null, 
+  setUser: async(user: userType | null) => set({ user }),
+}))
 export const useSubtaskStore = create<SubtaskState>((set) => ({
   subtasks: [],
   fetchSubtasks: async () => {
@@ -113,13 +122,15 @@ export function BoardProvider({ children }: PropsWithChildren) {
   const fetchColumns = useColumnStore((state) => state.fetchColumns)
   const fetchTasks = useTaskStore((state) => state.fetchTasks)
   const fetchSubtasks = useSubtaskStore((state) => state.fetchSubtasks)
-
+  const setUser = useUserStore((state) => state.setUser)
+  const user = useSession().data?.user as userType
   useEffect(() => {
     fetchBoards()
     fetchColumns()
     fetchTasks()
     fetchSubtasks()
-  }, [fetchBoards, fetchColumns, fetchTasks, fetchSubtasks])
+    setUser(user)
+  }, [fetchBoards, fetchColumns, fetchTasks, fetchSubtasks , setUser, user])
 
   return <>{children}</>
 }
