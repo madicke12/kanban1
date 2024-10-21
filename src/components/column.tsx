@@ -1,5 +1,5 @@
 'use client'
-import { useTaskDispatch, useTaskListe } from '@/app/boardContext';
+import { useTaskStore } from '@/app/boardContext';
 import { ColumnType, TaskType } from '@/app/lib/types/itemTypes';
 import React from 'react';
 import { useDrop } from 'react-dnd';
@@ -13,8 +13,8 @@ interface ColumnProps {
 }
 
 const Column: React.FC<ColumnProps> = ({ column, updateColumnTasks }) => {
-  const dispatch = useTaskDispatch();
-  const Tasks = useTaskListe();
+  const dispatch = useTaskStore((state) => state.updateTask);
+  const Tasks = useTaskStore((state) => state.tasks);
   const t = Tasks ? Tasks.filter((task: TaskType) => task.columnId === column.id) : [];
 
   const [{ isOver }, dropRef] = useDrop(() => ({
@@ -23,7 +23,7 @@ const Column: React.FC<ColumnProps> = ({ column, updateColumnTasks }) => {
       if (item.task.columnId !== column.id) {
         updateColumnTasks(item.task, column.id);
         item.task.columnId = column.id;
-        dispatch({ type: 'update', task: item.task });
+        dispatch( item.task );
       }
     },
     collect: (monitor) => ({
