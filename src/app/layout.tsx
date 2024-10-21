@@ -1,6 +1,7 @@
 'use client'
 import localFont from "next/font/local";
 import SessionProvider from './sessionprovider';
+import { Analytics } from "@vercel/analytics/react"
 import "./globals.css";
 
 const geistSans = localFont({
