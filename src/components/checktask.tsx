@@ -1,20 +1,19 @@
 'use client'
-import { useSubTaskDispatch } from "@/app/boardContext";
+import { useSubtaskStore } from "@/app/boardContext";
 import { SubtaskType } from "@/app/lib/types/itemTypes";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import axios from "axios";
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const CheckTask = ({ cisse  }:{cisse :SubtaskType}) => {
   const [isChecked, setChecked] = useState(cisse.isDone);
-  console.log(cisse)
-  const subdispatch = useSubTaskDispatch()
+  const update = useSubtaskStore((state) => state.updateSubtask);
   const handleChange = async () => {
     setChecked(!isChecked);
    const a = (await axios.put('/api/subtask/update', { subtaskId: cisse.id , isDone:!cisse.isDone})).data;
-      subdispatch({type:'update',subtask:a.subtask})
+      update(a.subtask)
   };
 
   return (
