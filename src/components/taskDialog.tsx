@@ -9,10 +9,10 @@ import {
 import CheckTask from "./checktask";
 import TaskCard from "./taskCard";
 import { TaskStatusSelect } from "./taskStatusSelect";
-import { useSubTaskListe } from "@/app/boardContext";
+import {  useSubtaskStore } from "@/app/boardContext";
 
 const TaskModal = ({ task }: { task: TaskType }) => {
-  const subtasks = useSubTaskListe()
+  const subtasks = useSubtaskStore((state) => state.subtasks);
   const sub = subtasks.filter((sub)=>sub.taskId === task.id)
   //console.log(madicke.Subtasks)
   return (
