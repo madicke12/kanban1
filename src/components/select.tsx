@@ -1,5 +1,5 @@
 'use client'
-import { useBoardListe, useColumnListe } from "@/app/boardContext";
+import { useColumnStore } from "@/app/boardContext";
 import { ParamsType } from "@/app/lib/types/itemTypes";
 import {
   Select,
@@ -13,7 +13,7 @@ import { useParams } from "next/navigation";
 const StatusSelect = ({setBoard } :{setBoard:any}) => {
 const params = useParams()
 
-const columns = useColumnListe().filter((column) => column.boardId === params.id).map((column) => column.name);
+const columns = useColumnStore((state)=>state.columns).filter((column) => column.boardId === params.id).map((column) => column.name);
 const SelectElements = columns.map((item) => (
     <SelectItem    key={item} value={item}>
       {item}
