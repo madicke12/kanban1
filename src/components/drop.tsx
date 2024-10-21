@@ -11,11 +11,11 @@ import { Button } from './ui/button';
 
 export function DropdownMenuRadioGroupDemo({ column }: { column: ColumnType }) {
   const [position, setPosition] = useState("bottom")
-  const updateColumn = useColumnStore((state) => state.updateColumn);
+  const deletecolumn = useColumnStore((state) => state.deleteColumn);
   const deleteColumn = async (id:string) => {
     try {
-      const column = await axios.delete('/api/column/delete', { data: { columnId: id } }) as ColumnType;
-      updateColumn(column);
+      deletecolumn(id);
+      await axios.delete('/api/column/delete', { data: { columnId: id } }) as ColumnType;
     } catch (error) {
       console.error('Failed to delete column:', error);
     }}
