@@ -8,6 +8,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Column from './column';
 import { Button } from './ui/button';
 import { useBoardStore, useColumnStore } from '@/app/boardContext';
+import AddColumnForm from './addColumnForm';
+import { AddColumnDialog } from './addColumnDialog';
 interface BoardProps {
   id: string,
 }
@@ -37,8 +39,10 @@ const Board: React.FC<BoardProps> = ({ id }) => {
         {columns.map((column: ColumnType) => (
           <Column key={column.id} column={column} updateColumnTasks={updateColumnTasks} />
         ))}
-        <Button className='w-full max-w-[220px] bg-primary flex items-center justify-center h-[100vh] font-bold'>Add Column</Button>
+      <AddColumnDialog id={id} />
+
       </div>
+
     </DndProvider>
   );
 }
