@@ -1,6 +1,5 @@
 
 import { Button } from "@/components/ui/button";
-import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Dialog,
   DialogContent,
@@ -9,26 +8,24 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import DynamicInput from "./dynamic-input";
 import StatusSelect from "./select";
-import { useRef, useState } from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 // import { createTask } from "@/lib/actions/actions";
-import { upload } from '@vercel/blob/client';
+import { useTaskStore } from "@/app/boardContext";
 import { type PutBlobResult } from '@vercel/blob';
-import { InputFile } from "./fileInput";
-import { Value } from "@radix-ui/react-select";
+import { upload } from '@vercel/blob/client';
 import axios from "axios";
-import { useTaskDispatch } from "@/app/boardContext";
-import { revalidatePath } from "next/cache";
 
 const AddTask = ({ id  }: { id: string }) => {
-  const dispatch  = useTaskDispatch()
+  const addTask  = useTaskStore((state)=>state.addTask)
   const [task, setTask] = useState({ titre: '', description: '', subtasks: '', currentstatus: '', userId: '656f4da9e7241b17b75896bc', columnId: id , picture: '' });
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [blob, setBlob] = useState<PutBlobResult>();
@@ -73,26 +70,12 @@ const AddTask = ({ id  }: { id: string }) => {
     try{
       const response = await axios.post('/api/task/create', data)
       console.log(response.data)
-      dispatch({type:'added', task: response.data})
+      addTask( response.data)
     }
     catch(err){
       console.log(err)
     }
   }
-
-  //   try {
-  //     const parsedData = TaskSchema.parse(task);
-  //     if (parsedData) {
-  //       const task = (await axios.post('http://localhost:3000/api/task/create', parsedData)).data
-  //     }
-  //   }
-
-  //   catch (err) {
-  //     console.log(err)
-  //   }
-  // }
-  
-    // await createTask(board)
 
     return (
       <Dialog  >
