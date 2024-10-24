@@ -20,7 +20,7 @@ const TaskModal = ({ task }: { task: TaskType }) => {
       <DialogTrigger>
        <TaskCard task={task}/>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{task.titre}</DialogTitle>
         </DialogHeader>
