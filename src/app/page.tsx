@@ -27,7 +27,7 @@ export default function Home() {
       
       <header className="absolute top-4 left-4">
         <Image
-          src="/logo.png" 
+          src="/logo.svg" 
           alt="Kanban Logo"
           width={80}
           height={80}
