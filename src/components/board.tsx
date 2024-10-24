@@ -10,6 +10,7 @@ import { Button } from './ui/button';
 import { useBoardStore, useColumnStore } from '@/app/boardContext';
 import AddColumnForm from './addColumnForm';
 import { AddColumnDialog } from './addColumnDialog';
+
 interface BoardProps {
   id: string,
 }
@@ -29,20 +30,16 @@ const Board: React.FC<BoardProps> = ({ id }) => {
 
   useEffect(() => {
     setColumns(cols.filter((col: ColumnType) => col.boardId === id));
-  }
-    , [cols,id]);
+  }, [cols, id]);
 
- 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className='p-3 flex gap-3 overflow-x-auto'>
         {columns.map((column: ColumnType) => (
           <Column key={column.id} column={column} updateColumnTasks={updateColumnTasks} />
         ))}
-      <AddColumnDialog id={id} />
-
+        <AddColumnDialog id={id} />
       </div>
-
     </DndProvider>
   );
 }
