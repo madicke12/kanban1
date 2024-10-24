@@ -10,11 +10,11 @@ const config: Config = {
   prefix: "",
   theme: {
   	extend: {
-      boxShadow: {
-        'custom': '0px 0px 1px rgba(23, 26, 31, 0.1), 0px 0px 2px rgba(23, 26, 31, 0.1)',
-      },
+  		boxShadow: {
+  			custom: '0px 0px 1px rgba(23, 26, 31, 0.1), 0px 0px 2px rgba(23, 26, 31, 0.1)'
+  		},
   		colors: {
-        madicke:"#FAFAFBFF",
+  			madicke: '#FAFAFBFF',
   			white: '#FFFFFF',
   			black: '#000000',
   			primary: {
@@ -336,6 +336,16 @@ const config: Config = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
+  			},
+  			sidebar: {
+  				DEFAULT: 'hsl(var(--sidebar-background))',
+  				foreground: 'hsl(var(--sidebar-foreground))',
+  				primary: 'hsl(var(--sidebar-primary))',
+  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+  				accent: 'hsl(var(--sidebar-accent))',
+  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+  				border: 'hsl(var(--sidebar-border))',
+  				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
   		borderRadius: {
