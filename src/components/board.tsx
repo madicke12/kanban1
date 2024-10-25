@@ -16,7 +16,11 @@ interface BoardProps {
 }
 
 const Board: React.FC<BoardProps> = ({ id }) => {
-  const boards = useBoardStore((state) => state.boards);
+  const fetchColumns = useColumnStore((state) => state.fetchColumns);
+  useEffect(() => {
+    fetchColumns();
+  }, [fetchColumns]);
+  
   const cols = useColumnStore((state) => state.columns);
   const [columns, setColumns] = useState<ColumnType[]>(cols.filter((col: ColumnType) => col.boardId === id));
   console.log('columns', columns);
