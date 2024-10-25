@@ -13,7 +13,7 @@ import { AppSidebar } from '@/components/app-sidebar';
 const layout = async (props: PropsWithChildren) => {
 
   return (
-    <BoardProvider >
+    // <BoardProvider >
     <div className="flex" >
     <SidebarProvider >
       {/* <SideNav /> */}
@@ -35,7 +35,7 @@ const layout = async (props: PropsWithChildren) => {
     </SidebarProvider>
 
     </div>
-    </BoardProvider>
+    // </BoardProvider>
 
   );
 };
