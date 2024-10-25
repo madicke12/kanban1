@@ -1,12 +1,8 @@
 "use client"
 
 import {
-  BadgeCheck,
-  Bell,
   ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
+  LogOut
 } from "lucide-react"
 
 import {
@@ -17,11 +13,10 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import {
   SidebarMenu,
@@ -31,17 +26,15 @@ import {
 } from "@/components/ui/sidebar"
 
 export function NavUser({
-  user,
+  session,
 }: {
-  user: {
-    name?: string
-    email?: string
-    image?: string
-    id?: string
+  session: {
+    user?:any,
+    expires:string
   }
 }) {
   const { isMobile } = useSidebar()
-
+  const user= session.user
   return (
     <SidebarMenu>
       <SidebarMenuItem>
