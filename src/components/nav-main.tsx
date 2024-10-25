@@ -1,7 +1,9 @@
 "use client"
 
-import { BookOpen, ChevronRight, type LucideIcon } from "lucide-react"
+import { BookOpen, ChevronRight } from "lucide-react"
 
+import { useBoardStore } from "@/app/boardContext"
+import { BoardType } from "@/app/lib/types/itemTypes"
 import {
   Collapsible,
   CollapsibleContent,
@@ -17,11 +19,19 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-import { AddBoardDialog } from "./addBoardDialog"
-import { BoardType } from "@/app/lib/types/itemTypes"
 import Link from "next/link"
+import { useEffect } from "react"
+import { AddBoardDialog } from "./addBoardDialog"
+import { Skeleton } from "./ui/skeleton"
 
-export function NavMain({board}: {board: BoardType[]}) {
+export function NavMain({session}: {session: {user?: any , expires:string} }) {
+  const fetchboards = useBoardStore((state) => state.fetchBoards) 
+  const user = session.user
+  useEffect(() => {
+    fetchboards()
+  }, [fetchboards])
+
+  const board = useBoardStore((state) => state.boards).filter((b: BoardType) => b.userId === user.id)
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Board Liste</SidebarGroupLabel>
@@ -42,6 +52,7 @@ export function NavMain({board}: {board: BoardType[]}) {
                 </SidebarMenuButton>
               </CollapsibleTrigger>
               <CollapsibleContent>
+              { board ? (
                 <SidebarMenuSub>
                   {board.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.id}>
@@ -52,7 +63,9 @@ export function NavMain({board}: {board: BoardType[]}) {
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}
-                </SidebarMenuSub>
+                </SidebarMenuSub>) :( <Skeleton />)
+}
+
               </CollapsibleContent>
             </SidebarMenuItem>
           </Collapsible>
