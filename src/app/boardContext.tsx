@@ -5,6 +5,8 @@ import axios from 'axios'
 import { BoardType, ColumnType, SubtaskType, TaskType, userType } from './lib/types/itemTypes'
 import { PropsWithChildren, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
+import { getServerSession } from 'next-auth'
+import { authConfig } from './api/auth/[...nextauth]/route'
 
 // Zustand store for Board
 interface BoardState {
