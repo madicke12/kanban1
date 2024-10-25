@@ -1,5 +1,4 @@
-"use client"
-
+'use server';
 import * as React from "react"
 import {
   AudioWaveform,
@@ -27,7 +26,12 @@ import {
 } from "@/components/ui/sidebar"
 import { useSession } from "next-auth/react"
 import { userType } from "@/app/lib/types/itemTypes"
-import { useBoardStore } from "@/app/boardContext"
+import { useBoardStore, useUserStore } from "@/app/boardContext"
+import { Suspense } from "react"
+import { NavUserSkeleton } from "./NavUserSkeleton"
+import { getServerSession, Session } from "next-auth"
+import { authConfig } from "@/app/api/auth/[...nextauth]/route"
+import { NavMainSkeleton } from "./NavMainSkeleton";
 
 // This is sample data.
 const data = {
@@ -159,20 +163,24 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const user = useSession().data?.user as userType
-    const boards = useBoardStore((state) => state.boards).filter(item => item.userId === user.id)
+export  async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const session = await getServerSession(authConfig) as Session
+    console.log('user', session)
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <TeamSwitcher  />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain board={boards}  />
+        <Suspense fallback={<NavMainSkeleton/>}>
+        <NavMain session={session}  />
         {/* <NavProjects projects={data.projects} /> */}
+        </Suspense>
       </SidebarContent>
       <SidebarFooter>
-      {user && <NavUser user={user} />}  
+      <Suspense fallback={<NavUserSkeleton/>}>
+       <NavUser session={session} />  
+      </Suspense>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
