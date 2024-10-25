@@ -13,9 +13,15 @@ interface ColumnProps {
 }
 
 const Column: React.FC<ColumnProps> = ({ column, updateColumnTasks }) => {
+  const fetchTasks = useTaskStore((state) => state.fetchTasks);
+
+  React.useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
   const dispatch = useTaskStore((state) => state.updateTask);
   const Tasks = useTaskStore((state) => state.tasks);
   const t = Tasks ? Tasks.filter((task: TaskType) => task.columnId === column.id) : [];
+  console.log('tasks', t);
 
   const [{ isOver }, dropRef] = useDrop(() => ({
     accept: 'TASK',
