@@ -4,7 +4,7 @@ import NextAuth, { Session } from "next-auth"
 import GitHub from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 
-export const authConfig ={
+export const authOption ={
   adapter: PrismaAdapter(prisma),
   secret: process.env.SECRET,
   providers: [
@@ -28,6 +28,6 @@ export const authConfig ={
   
   }
 
-const handler = NextAuth(authConfig);
+const handler = NextAuth(authOption);
 
 export { handler as GET, handler as POST }
