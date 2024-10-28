@@ -15,6 +15,7 @@ interface BoardState {
   addBoard: (board: BoardType) => void
   updateBoard: (board: BoardType) => void
   deleteBoard: (id: string) => void
+  init: (board:BoardType[])=>void
 }
 
 export const useBoardStore = create<BoardState>((set) => ({
@@ -22,6 +23,9 @@ export const useBoardStore = create<BoardState>((set) => ({
   fetchBoards: async () => {
     const response = await axios.get('/api/board/getAll')
     set({ boards: response.data })
+  },
+  init: (board:BoardType[])=>{
+    set({boards:board})
   },
   addBoard: (board: BoardType) => set((state) => ({ boards: [...state.boards, board] })),
   updateBoard: (board: BoardType) =>
