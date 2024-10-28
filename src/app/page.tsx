@@ -15,7 +15,7 @@ export default function Home() {
     setTimeout(() => setShowConfetti(false), 2000); // Confetti for 2 seconds
   };
 
-  const handleSignOut = () => {
+   const handleSignOut = () => {
     signOut();
     setShowConfetti(true);
     setTimeout(() => setShowConfetti(false), 2000); 
