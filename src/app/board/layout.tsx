@@ -9,6 +9,7 @@ import { PropsWithChildren } from "react";
 import filterIcon from '../../../public/1x/ios/@3x/filter-2@3x.png';
 import { BoardProvider } from '../boardContext';
 import { AppSidebar } from '@/components/app-sidebar';
+import { Toaster } from '@/components/ui/toaster';
 
 const layout = async (props: PropsWithChildren) => {
 
@@ -31,6 +32,7 @@ const layout = async (props: PropsWithChildren) => {
           </div>
         </div>
         {props.children}
+
       </div>
     </SidebarProvider>
 
