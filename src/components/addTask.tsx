@@ -23,8 +23,11 @@ import { useTaskStore } from "@/app/boardContext";
 import { type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
 import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
 
 const AddTask = ({ id  }: { id: string }) => {
+  const { toast } = useToast()
+
   const addTask  = useTaskStore((state)=>state.addTask)
   const [task, setTask] = useState({ titre: '', description: '', subtasks: '', currentstatus: '', userId: '656f4da9e7241b17b75896bc', columnId: id , picture: '' });
   const inputFileRef = useRef<HTMLInputElement>(null);
@@ -71,6 +74,10 @@ const AddTask = ({ id  }: { id: string }) => {
       const response = await axios.post('/api/task/create', data)
       console.log(response.data)
       addTask( response.data)
+      toast({
+        title: "Add Task",
+        description: "The task was added successfullu.",
+      })
     }
     catch(err){
       console.log(err)
