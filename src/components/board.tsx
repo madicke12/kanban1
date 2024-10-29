@@ -1,15 +1,13 @@
 'use client';
 
+import { useColumnStore } from '@/app/boardContext';
 import { ColumnType, TaskType } from '@/app/lib/types/itemTypes';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import Column from './column';
-import { Button } from './ui/button';
-import { useBoardStore, useColumnStore } from '@/app/boardContext';
-import AddColumnForm from './addColumnForm';
 import { AddColumnDialog } from './addColumnDialog';
+import Column from './column';
 
 interface BoardProps {
   id: string,
