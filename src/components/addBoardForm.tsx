@@ -4,6 +4,7 @@ import { useBoardStore } from "@/app/boardContext";
 import { userType } from "@/app/lib/types/itemTypes";
 import { Button } from "@/components/ui/button";
 import {
+  DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
@@ -16,6 +17,7 @@ import { z } from "zod";
 import DynamicInput from "./dynamic-input";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { Toaster } from "./ui/toaster";
 
  export const AddBoardForm =  () => {
   const user = useSession().data?.user as userType
@@ -54,6 +56,7 @@ const handleSubmit =async (e:React.FormEvent<HTMLFormElement>)=>{
           Add a new board here click Create new Board when you're done
         </DialogDescription>
       </DialogHeader>
+      <DialogContent>
       <div className="grid gap-4 py-4">
         <div className="grid grid-cols-1 items-center gap-4">
           <Label htmlFor="name" className="">
@@ -73,6 +76,8 @@ const handleSubmit =async (e:React.FormEvent<HTMLFormElement>)=>{
          {/* <input type="text" className="hidden" value={JSON.stringify(['To Do','Doing','Done'])} readOnly name="columns" /> */}
         </div>
       </div>
+      <Toaster/>
+      </DialogContent>
       <DialogFooter>
         <Button className="w-full bg-primary hover:bg-primary-500" type="submit" >
           Create new Board
