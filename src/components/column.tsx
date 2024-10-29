@@ -6,6 +6,7 @@ import { useDrop } from 'react-dnd';
 import AddTask from './addTask';
 import { DropdownMenuRadioGroupDemo } from './drop';
 import TaskModal from './taskDialog';
+import TaskContextMenu from './contexmenu';
 
 interface ColumnProps {
   column: ColumnType;
@@ -50,7 +51,7 @@ const Column: React.FC<ColumnProps> = ({ column, updateColumnTasks }) => {
           ref={dropRef as unknown as React.LegacyRef<HTMLDivElement>} // Use LegacyRef for function refs
         >
           {t.map(task => (
-            <TaskModal key={task.id} task={task} />
+            <TaskContextMenu key={task.id} task={task} />
           ))}
         </div>
       </div>
