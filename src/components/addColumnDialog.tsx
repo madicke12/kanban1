@@ -7,7 +7,7 @@ export const AddColumnDialog: React.FC<{ id: string }> = ({ id }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-64 h-12">Add Column</Button>
+        <Button className="w-64 h-[100vh] bg-slate-300">Add Column</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <AddColumnForm id={id}/>
