@@ -1,171 +1,33 @@
 'use server';
-import * as React from "react"
-import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
+import * as React from "react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { authOption } from "@/app/api/auth/[...nextauth]/route";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
+import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { useSession } from "next-auth/react"
-import { userType } from "@/app/lib/types/itemTypes"
-import { useBoardStore, useUserStore } from "@/app/boardContext"
-import { Suspense } from "react"
-import { NavUserSkeleton } from "./NavUserSkeleton"
-import { getServerSession, Session } from "next-auth"
-import { authConfig } from "@/app/api/auth/[...nextauth]/route"
+} from "@/components/ui/sidebar";
+import { getBoard } from "@/lib/getboard";
+import { getServerSession } from "next-auth";
+import { Suspense } from "react";
 import { NavMainSkeleton } from "./NavMainSkeleton";
-
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
-}
+import { NavUserSkeleton } from "./NavUserSkeleton";
+import { BoardType } from "@/app/lib/types/itemTypes";
+import { redirect } from "next/navigation";
 
 export  async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const session = await getServerSession(authConfig) as Session
-    console.log('user', session)
+    const session = await getServerSession(authOption) as {user:any, expires:string}
+    if(!session){
+      redirect('/')
+    }
+    const board = await getBoard(session.user.id) as BoardType[]
+    console.log(typeof(board))
+    
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -173,8 +35,7 @@ export  async function AppSidebar({ ...props }: React.ComponentProps<typeof Side
       </SidebarHeader>
       <SidebarContent>
         <Suspense fallback={<NavMainSkeleton/>}>
-        <NavMain session={session}  />
-        {/* <NavProjects projects={data.projects} /> */}
+        <NavMain board ={board}  />
         </Suspense>
       </SidebarContent>
       <SidebarFooter>
