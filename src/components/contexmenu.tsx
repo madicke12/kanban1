@@ -16,7 +16,8 @@ const TaskContextMenu = ({task}:{task:TaskType}) => {
     const del = useTaskStore((state) => state.deleteTask)
     const handleDelete = async (id: string) => {
         del(id)
-        await axios.delete(`/api/task/delete/${id}`)
+        await axios.delete('/api/task/delete', { data: { taskId: id } }) 
+
       }
 
     return(
