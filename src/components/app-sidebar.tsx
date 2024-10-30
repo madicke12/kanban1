@@ -1,7 +1,6 @@
 'use server';
 import * as React from "react";
 
-import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
@@ -19,12 +18,14 @@ import { NavMainSkeleton } from "./NavMainSkeleton";
 import { NavUserSkeleton } from "./NavUserSkeleton";
 import { BoardType } from "@/app/lib/types/itemTypes";
 import { redirect } from "next/navigation";
+import { authOption } from "@/lib/utils";
 
 export  async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const session = await getServerSession(authOption) as {user:any, expires:string}
     if(!session){
       redirect('/')
     }
+    //
     const board = await getBoard(session.user.id) as BoardType[]
     console.log(typeof(board))
     
